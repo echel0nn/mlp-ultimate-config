@@ -1,0 +1,3 @@
+#!/bin/sh
+
+feh --bg-fill /home/echelon/Resimler/ECHEL0N4.png &

@@ -1,0 +1,69 @@
+# .xprofile
+#
+# use this in lieu of .xinitrc as .xinitrc won't be sourced if using
+# a display manager, while this should.
+#
+# note that other key startup items are run via bin/wm/init-tilingwm
+
+
+xrdb -DSOLARIZED_DARK -load ~/.Xresources
+
+
+# ----------------------------------------------------------------------
+# CapsLock as CTRL
+#setxkbmap -option ctrl:nocaps
+
+# ----------------------------------------------------------------------
+# Currently using tab as both tab key and a modifier. Works well though
+# I need to switch away from using Xmodmap. Use xkb (via localectl) seems
+# like a better idea.
+
+# make tab a hyper and set hyper as mod1
+#[[ -f ~/.Xmodmap ]] && xmodmap ~/.Xmodmap
+
+# xcape depends on .Xmodmap being set correctly (TODO: switch to xkb)
+# this lets the (now hyper_L) tab key act normally unless used as a
+# modifier
+
+#xcape -e "Hyper_L=Tab;Hyper_R=backslash"
+
+#XKBDIR=$HOME/.xkb
+#xkbcomp -w3 -I$XKBDIR $XKBDIR/keymap/custom $DISPLAY
+#xcape -e "Hyper_L=Tab;Hyper_R=backslash"
+
+
+# ----------------------------------------------------------------------
+# run xsettingsd in lieu of gnome-settings-daemon
+# this helps pass certain values to gtk programs (fonts, for example)
+# cf https://github.com/derat/xsettingsd/wiki/Installation
+# TODO: wiki mentions using .xsession .. should i be using that instead
+# of .xprofile? just move into my init file? make a new .shell like
+# config file or folder?
+
+/usr/bin/xsettingsd &
+
+# ----------------------------------------------------------------------
+# resolution & display 
+
+# xrandr --setprovideroutputsource modesetting NVIDIA-0
+xrandr --dpi 96
+
+# Calling 'displayctl' without arguments is the same as calling it with
+# 'auto'. This will scan the current set of connected displays, check to
+# see if I have a preferred configuration via automatically recorded
+# connection data, and if so will apply either that value or a default
+# based on state of connected external displays.
+
+# x is crashing on startup due to displayctl!!!
+$HOME/bin/wm/displayctl
+
+ntpd -qg -d
+# where is my resolution?
+
+cvt 1920 1080 60
+xrandr --newmode "1920x1080_60.00"  173.00  1920 2048 2248 2576  1080 1083 1088 1120 -hsync +vsync
+xrandr --addmode Virtual1 1920x1080_60.00
+#/home/echel0n/.screenlayout/fakmamonitor.sh
+/home/echelon/bin/wm/init-tilingwm
+export TERMINAL=gnome-terminal
+
