@@ -17,4 +17,5 @@ vim, xmonad, xmobar, bashrc, bash profile and startups
 
 #### New xmobar colours and borders (19 July 2019)
 ![sc-main](https://raw.githubusercontent.com/echel0nn/mlp-ultimate-config/master/screenshots/screenshot_new.png)
-
+#### New Gruvbox Colours Palette (5 Oct 2019)
+![sc-main](https://raw.githubusercontent.com/echel0nn/mlp-ultimate-config-master/screenshots/gruvbox_screenshot.png)
