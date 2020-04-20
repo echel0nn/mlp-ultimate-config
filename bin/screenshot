@@ -8,6 +8,13 @@ case ${1:-} in
     *) SEL="" ;;
 esac
 
+rm ~/.xmonad/xmobar.conf 
+cp ~/.xmonad/xmobar.conf.bak ~/.xmonad/xmobar.conf
+xdotool key alt+q
+sleep 2 &&
 maim --format=png $SEL "$FILENAME"
 echo -n $FILENAME | xclip -selection clipbard
-notify-send "Screen shot saved\n$FILENAME"
+notify-send "Screen shot saved $FILENAME"
+rm ~/.xmonad/xmobar.conf
+cp ~/.xmonad/xmobar.conf.baq ~/.xmonad/xmobar.conf
+xdotool key alt+q
