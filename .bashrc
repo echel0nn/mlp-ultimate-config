@@ -58,7 +58,6 @@ alias gpu_in_use="glxinfo  | egrep \"OpenGL vendor|OpenGL renderer\""
 alias find_big_files="find ~/ -type f -size +100M"
 alias chromium='chromium --process-per-site'
 alias ntt='sudo netstat -pantN'
-alias ctf='cd ~/Belgeler/ctf/2018/'
 alias hackthebox='cd ~/Belgeler/research/hackthebox'
 alias f='free -mh'
 alias vim='nvim'
@@ -116,10 +115,12 @@ alias wordlist_def='echo /usr/share/dirbuster/directory-list-2.3-medium.txt'
 alias binexp='echo /opt/metasploit/tools/exploit'
 # nmap script to vuln links.
 # nmap -sV --script vulners localhost
-alias nmapv='sudo nmap -sV --script vulners --script-args mincvss=5.0' #requires an argument
+alias nmapv='sudo nmap -sV --script vulners --script-args mincvss=5.0 --exclude 2000,5060,8008,8015' #requires an argument
 alias nmaps='nmap -oA smb_vulns -p445 --script smb-vuln-* ' # requires an argument <IP>
 # preferred bitchx
 alias bitchx='BitchX -b -l ~/.ircrc -n echel0n_1881 -A -P chat.freenode.net'
+# alias to burpsuite proffesional
+alias burpsuite='java -Xbootclasspath/p:/tools/burploader.jar -jar /tools/burpsuite_pro_v2.0.11beta.jar'
 alias seclist='cd /usr/share/wordlists/seclists-git/'
 alias fuzzingcommon='wfuzz -c -v -w /home/echelon/wordlist/seclists-git/Discovery/Web_Content/common.txt --hc 404'
 # clear RAM
@@ -129,8 +130,10 @@ alias c="clear"
 alias r="reset"
 # fix my fucking mouse please?
 alias fixmyfumaus='xinput set-prop "Razer Razer DeathAdder" --type=float "libinput Accel Speed" -1.0'
-
+alias fkthis='echo iedereen probeert maar stabiel te zijn, maar het leven is nou eenmaal borderline.'
 # extract a lot of compressed file with a simple trick
+alias shutupxmonad="sudo pacman -S `pacman -Qs haskell|grep 'local/' | tr '/' ' ' |awk '{print $2}'|grep '^haskell'`"
+
 extract () {
   if [ -f $1 ] ; then
       case $1 in
@@ -151,12 +154,38 @@ extract () {
       echo "'$1' is not a valid file!"
   fi
 }
+alias find_big_packages="pacman -Qlq $1 | grep -v '/$' | xargs du -h | sort -h"
+
+# after a big mistake to rm -rf var.lib.pacman.local directory
+# at least dont remove the var log pacman.log please god no!
+ recovery-pacman() {
+    sudo pacman "$@"  \
+    --log /dev/null   \
+    --noscriptlet     \
+    --dbonly          \
+    --nodeps          \
+    --needed
+}
+
+
+function biggestProgs()
+{
+    echo "-----+---------+---------------------------"
+    echo " POS | SIZE MB |            NAME " 
+    echo "-----+---------+---------------------------"
+    pacman -Qs|awk '/local/{print substr($3,2)" "substr($1,7)}'|sort -rn|head -$1|awk '{printf "%4d | %7s | %s\n",NR,$1,$2}'
+}
 
 # dummy
+alias projects='cd /home/projects/'
 alias options='echo  "[HAHAHA!] you are not in msfconsole you mf. LOL" '
 # Print Echelon ASCII art.
-alias ida64="wine ~/.wine/drive_c/Program\ Files/IDA\ 7.0/ida64.exe"
-alias ida="wine ~/.wine/drive_c/Program\ Files/IDA\ 7.0/ida.exe"
+alias ida64="wine ~/.wine/drive_c/Program\ Files/IDA\ 7.2/ida64.exe"
+alias ida="wine ~/.wine/drive_c/Program\ Files/IDA\ 7.2/ida.exe"
+alias phttp="sudo python -m http.server 80"
+alias gobuster-files='gobuster dir -t 12 -w "/usr/share/wordlists/fuzzdb/Discovery/PredictableRes/raft-large-files.txt"  -H "User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:69.0) Gecko/20100101 Firefox/69.0" -x "html,aspx, php, txt, rar, zip"'
+alias gobuster-directories='gobuster dir -t 12 -w "/usr/share/wordlists/fuzzdb/Discovery/PredictableRes/raft-large-directories.txt"  -H "User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:69.0) Gecko/20100101 Firefox/69.0" -x "txt, rar, zip"'
+alias responder_the_fuck_over_it='sudo responder -d -f -w -F -P -b -r --lm -I ens32'
 alias echelon='echo;
 echo "                      *                 ***"                         
 echo "                     **                   ***"                     
@@ -177,3 +206,21 @@ echo "                            * "
 echo "                           * "                                            
 echo "                          * "                                             
 echo "                         * "'
+
+# vmware-user-suid-wrapper kopyala yapıştırmaya yarıyo kardaşım
+# sudo dd bs=4M if=manjaro-kde-17.0.6-stable-x86_64.iso of=/dev/sdb
+#  iso'yu usb'ye yazdır
+# convert -composite *.png oout.png
+
+## LAZY
+alias gnmap="cat *.gnmap"
+alias nmaph='nmap --script http-vulners-regex.nse --script-args paths={"/"} '
+alias nikto='nikto -Option USERAGENT=Mozilla'
+alias wfuzzd='wfuzz -w /usr/share/dirbuster/directory-list-lowercase-2.3-medium.txt -H "User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:69.0) Gecko/20100101 Firefox/69.0" --hc=404'
+alias sqlmaptf='sqlmap --risk 3 --level 3 --random-agent --tamper=apostrophemask,apostrophenullencode,base64encode,between,chardoubleencode,charencode,charunicodeencode,equaltolike,greatest,ifnull2ifisnull,multiplespaces,percentage,randomcase,space2comment,space2plus,space2randomblank,unionalltounion,between --drop-set-cookie'
+
+
+# netw
+# sudo route add default gw 10.0.0.0 # add gateway
+# add static IP
+# sudo ifconfig ens32 192.168.0.0 gateway 255.255.252.0
