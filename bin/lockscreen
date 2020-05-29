@@ -21,7 +21,7 @@ housekeeping () {
 
 main () {
 	export DISPLAY=:0
-	export XAUTHORITY=/home/echelon/.Xauthority
+	export XAUTHORITY=/home/dante/.Xauthority
 
 	SCRIPTNAME=$(basename $0)
 	SCRIPTDIR=$(dirname $(readlink -f $0))

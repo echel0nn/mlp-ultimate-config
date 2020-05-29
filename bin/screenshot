@@ -1,7 +1,7 @@
 #!/bin/sh
 
 SCRIPTNAME=$(basename $0)
-FILENAME="$HOME/Resimler/ekran/$SCRIPTNAME-$(date +'%Y-%m-%d-%H-%M-%S').png"
+FILENAME="$HOME/Screenshots/$SCRIPTNAME-$(date +'%Y-%m-%d-%H-%M-%S').png"
 
 case ${1:-} in
     select*|region|area) SEL="-s" ;;
@@ -11,10 +11,12 @@ esac
 rm ~/.xmonad/xmobar.conf 
 cp ~/.xmonad/xmobar.conf.bak ~/.xmonad/xmobar.conf
 xdotool key alt+q
-sleep 2 &&
+notify-send "Shadowed IP"
+sleep 3 &&
 maim --format=png $SEL "$FILENAME"
 echo -n $FILENAME | xclip -selection clipbard
 notify-send "Screen shot saved $FILENAME"
 rm ~/.xmonad/xmobar.conf
 cp ~/.xmonad/xmobar.conf.baq ~/.xmonad/xmobar.conf
 xdotool key alt+q
+notify-send "Unshadowed IP"
