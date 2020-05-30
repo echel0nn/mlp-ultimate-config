@@ -24,7 +24,7 @@ layout="$(xkb-switch)"
 
 case $layout in
     ${stdlayout}) color=$red; icon=" "; name=$layout ;; # f11c fa-keyboard-o
-    *) color=$magenta; icon=" "; name="echel0n" ;; # f11c fa-keyboard-o
+    *) color=$magenta; icon=" "; name="UNLEASHED" ;; # f11c fa-keyboard-o
 esac
 
 echo "<fc=$color><fn=1>$icon</fn> ${name}</fc>"

@@ -500,8 +500,8 @@ green       = "#859900"
 
 -- sizes
 gap         = 5
-topbar      = 1
-border      = 2
+topbar      = 2
+border      = 0
 prompt      = 20
 status      = 10
 
@@ -545,7 +545,7 @@ myTabTheme = def
 
 myPromptTheme = def
     { font                  = myFont
-    , bgColor               = base03
+    , bgColor               = base01
     , fgColor               = active
     , fgHLight              = base03
     , bgHLight              = active
