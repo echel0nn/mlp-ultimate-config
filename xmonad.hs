@@ -314,17 +314,17 @@ wsCOM   = "COM"
 wsDOM   = "DOM"
 wsDMO   = "DMO"
 wsFLOAT = "FLT"
-wsGEN   = "GEN"
+wsGEN   = "General"
 wsGCC   = "GCC"
 wsMON   = "MON"
 wsOSS   = "OSS"
 wsRAD   = "RAD"
 wsRW    = "RW"
-wsSYS   = "SYS"
+wsSYS   = "Social"
 wsTMP   = "TMP"
 wsVIX   = "VIX"
-wsWRK   = "WRK"
-wsWRK2  = "WRK:2"
+wsWRK   = "Work"
+wsWRK2  = "Code"
 wsGGC   = "GGC"
 
 -- myWorkspaces = map show [1..9]
@@ -400,10 +400,10 @@ volumeDown       = "pulseaudio-ctl down"
 myAltTerminal       = "cool-retro-term"
 myBrowser           = "firefox" -- chrome with WS profile dirs
 myBrowserClass      = "Google-chrome-beta"
-myStatusBar         = "xmobar -x0 /home/dante/.xmonad/xmobar.conf"
+myStatusBar         = "xmobar -x0 /home/unleashed/.xmonad/xmobar.conf"
 --myLauncher          = "dmenu_run"
 --myLauncher          = "rofi -matching fuzzy -show run"
-myLauncher          = "rofi -matching fuzzy -modi combi -show combi -combi-modi run,drun -theme /home/dante/.rofi/solarized-darker.rasi"
+myLauncher          = "rofi -matching fuzzy -modi combi -show combi -combi-modi run,drun -theme /home/unleashed/.rofi/solarized-darker.rasi"
 
 
 -- I'm using a custom browser launching script (see myBrowser above) that
@@ -493,22 +493,22 @@ yellow  = "#EF1F60"
 orange  = "#cb4b16"
 red     = "#dc322f"
 magenta = "#d33682"
-violet  = "#6c71c4"
+violet  = "#b80095"
 blue    = "#FCF98C"
 cyan    = "#2aa198"
-green       = "#859900"
+green       = "#e0c7ff"
 
 -- sizes
 gap         = 5
-topbar      = 2
+topbar      = 20
 border      = 0
 prompt      = 20
 status      = 10
 
-myNormalBorderColor     = "#BC3135"
+myNormalBorderColor     = "#b80095"
 myFocusedBorderColor    = violet
 
-active      = violet
+active      = green 
 activeWarn  = blue
 inactive    = orange
 focusColor  = cyan
@@ -522,7 +522,7 @@ myWideFont  = "xft:SauceCodePro Nerd Font:size=12:antialias=true"
 -- (I find this a cleaner and less visually intrusive solution)
 topBarTheme = def
     { fontName              = myFont
-    , inactiveBorderColor   = base03
+    , inactiveBorderColor   = base01
     , inactiveColor         = base03
     , inactiveTextColor     = base03
     , activeBorderColor     = active
@@ -1527,13 +1527,13 @@ myLogHook h = do
     --dynamicLogWithPP $ defaultPP
     dynamicLogWithPP $ def
 
-        { ppCurrent             = xmobarColor active "" . wrap "[" "]"
-        , ppTitle               = xmobarColor active "" . shorten 50
+        { ppCurrent             = xmobarColor active "" . wrap "[ " " ]"
+        , ppTitle               = xmobarColor active "" . shorten 10
         , ppVisible             = xmobarColor base0  "" . wrap "(" ")"
         , ppUrgent              = xmobarColor red    "" . wrap " " " "
         , ppHidden              = check
         , ppHiddenNoWindows     = const ""
-        , ppSep                 = xmobarColor red blue "  :  "
+        , ppSep                 = xmobarColor red blue " : "
         , ppWsSep               = " "
         , ppLayout              = xmobarColor yellow ""
         , ppOrder               = id
