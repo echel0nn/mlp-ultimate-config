@@ -1,7 +1,7 @@
 #!/bin/sh
 
-dev_wifi=wlp5s0 
-dev_eth=enp4s0 
+dev_wifi=wlp61s0 
+dev_eth=enp0s31f6 
 dev_vpn=tun0
 
 base03=#002b36
