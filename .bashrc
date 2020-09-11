@@ -28,8 +28,9 @@ shopt -s extglob
 export VISUAL=nvim
 export EDITOR=nvim
 
-
-PS1="\w\[\033[0;32m\]$\[\033[0m\] "
+# normal bash
+# PS1="\w\[\033[0;32m\]$\[\033[0m\] "
+PS1='$(gbt $?)'
 bind "set completion-ignore-case on"
 bind "set show-all-if-ambiguous on"
 
@@ -119,8 +120,6 @@ alias nmapv='sudo nmap -sV --script vulners --script-args mincvss=5.0 --exclude 
 alias nmaps='nmap -oA smb_vulns -p445 --script smb-vuln-* ' # requires an argument <IP>
 # preferred bitchx
 alias bitchx='BitchX -b -l ~/.ircrc -n echel0n_1881 -A -P chat.freenode.net'
-# alias to burpsuite proffesional
-alias burpsuite='java -Xbootclasspath/p:/tools/burploader.jar -jar /tools/burpsuite_pro_v2.0.11beta.jar'
 alias seclist='cd /usr/share/wordlists/seclists-git/'
 alias fuzzingcommon='wfuzz -c -v -w /home/echelon/wordlist/seclists-git/Discovery/Web_Content/common.txt --hc 404'
 # clear RAM
@@ -224,3 +223,5 @@ alias sqlmaptf='sqlmap --risk 3 --level 3 --random-agent --tamper=apostrophemask
 # sudo route add default gw 10.0.0.0 # add gateway
 # add static IP
 # sudo ifconfig ens32 192.168.0.0 gateway 255.255.252.0
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
