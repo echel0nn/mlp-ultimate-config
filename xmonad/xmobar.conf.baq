@@ -66,6 +66,7 @@ Config
 --            [ "-t", "<fc=#6c71c4>| <dev></fc>"
 --            ] 10 
        , Run Com "whatismyip" [] "ip"  5
+       , Run Com "status-brightness" [] "br" 5
        , Run Wireless "wlp5s0" 
             [ "-a", "l"
             , "-x", "-"
@@ -85,6 +86,6 @@ Config
         ]
         , sepChar            = "%"
         , alignSep           = "}{"
-        , template           = " %StdinReader% }{ %nowplaying% %ip% %net% %default:Master% %battery% %date% %kb%  "
+        , template           = " %StdinReader% }{ %nowplaying% %ip% %net% %default:Master% %battery% %br% %date% %kb%  "
     }
 

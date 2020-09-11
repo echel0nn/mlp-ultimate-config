@@ -1,33 +1,5 @@
-xrandr --output HDMI-1 --primary --mode 1920x1080 --rate 144 &
-echo -e "\t Refresh rate settings : 144hz" | pv -qL 75
 setxkbmap tr &
-echo -e "\t Keyboard layout: TR" | pv -qL 75
 init-wallpaper & 
 xinput set-prop "Razer Razer DeathAdder" --type=float "libinput Accel Speed" -1.0 &
-echo -e "\t Fixed your fucking mouse, Disabled acceleration" | pv -qL 25
-sudo dhcpcd -4
-echo -e "\t Internet connection is okay, i guess.." | pv -qL 25
-echo
-echo
-echo "                      *                 ***"        | pv -qL 750                 
-echo "                     **                   ***"                | pv -qL 750      
-echo "                     **                    **"                            | pv -qL 750
-echo "                     **                    **"                            | pv -qL 750
-echo "                     **                    **       ****"                 | pv -qL 750
-echo "   ***       ****    **  ***      ***      **      * ***  * ***  ****    " | pv -qL 750
-echo "  * ***     * ***  * ** * ***    * ***     **     *   ****   **** **** * " | pv -qL 750
-echo " *   ***   *   ****  ***   ***  *   ***    **    **    **     **   ****  " | pv -qL 750
-echo "**    *** **         **     ** **    ***   **    **    **     **    **   " | pv -qL 750
-echo "********  **         **     ** ********    **    **    **     **    **   " | pv -qL 750
-echo "*******   **         **     ** *******     **    **    **     **    **   " | pv -qL 750
-echo "**        **         **     ** **          **    **    **     **    **   " | pv -qL 750
-echo "****    * ***     *  **     ** ****    *   **     ******      **    **   " | pv -qL 750
-echo " *******   *******   **     **  *******    *** *   ****       ***   ***  " | pv -qL 750
-echo "  *****     *****     **    **   *****      ***                ***   *** " | pv -qL 750
-echo "                            * "                                           | pv -qL 125
-echo "                           * "                                            | pv -qL 55
-echo "                          * "                                             | pv -qL 55
-echo "                         * " | pv -qL 45
-
 echo -e "\tWelcome back master...\n\tWhat we are going to do today?" | pv -qL 25
 
