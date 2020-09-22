@@ -1,0 +1,152 @@
+# yamllint disable rule:braces rule:commas rule:colons rule:comments-indentation
+---
+window:
+    # Blank space added around the window in pixels
+    padding:
+        x: 0
+        y: 0
+
+    # Spread additional padding evenly around the terminal content
+    dynamic_padding: true
+
+    # Disable border and title bar
+    decorations: none
+
+font:
+    normal:
+        family: Source Code Pro 
+        style: Regular
+    bold:
+        family: Source Code Pro 
+        style: Bold
+    italic:
+        family: Source Code Pro 
+        style: Italic
+
+    # Point size of the font
+    size: 7.5
+# Colors (One Dark); if dim colors are not set, they will be calculated
+# automatically based on the `normal` colors
+colors:
+    primary:
+        background: '#131314'
+        foreground: '#d4c6c6'
+    cursor:
+        text: '#ffffff'    # black
+        cursor: '#bc3152'
+    vi_mode_cursor:
+        text: '#ffffff'
+        cursor: '#bc3152'
+    selection:
+        text: '#ffffff'
+        background: '#2a24e4'
+    search:
+        matches:
+            foreground: '#3e4452'
+            background: '#e5c07b'
+        bar:
+            background: '#282c34'
+            foreground: '#abb2bf'
+    normal:
+        black:   '#e0c7ff'
+        red:     '#eb2180'
+        green:   '#e63d65'
+        yellow:  '#f9a2a2'
+        blue:    '#20c0ca'
+        magenta: '#ff007b'
+        cyan:    '#ef1f60'
+        white:   '#3d3bf4'
+    bright:
+        black:   '#b8437C'
+        red:     '#e7e364'
+        green:   '#20c0ca'
+        yellow:  '#63d14e'
+        blue:    '#b80059'
+        magenta: '#c678dd'
+        cyan:    '#fcf98c'
+        white:   '#da4b6d'
+
+mouse:
+    hide_when_typing: false
+    url:
+        # These are the modifiers that need to be held down for opening URLs
+        # when clicking
+        modifiers: Shift
+
+selection:
+    # When set to `true`, selected text will be copied to the primary
+    # clipboard.
+    save_to_clipboard: true
+
+cursor:
+    # Thickness of the cursor (number from `0.0` to `1.0`)
+    thickness: 0.06
+    # Vi mode cursor style
+    vi_mode_style: Block
+
+# Default shell
+# For osx uncomment the following
+    # shell:
+        # program: /usr/local/bin/bash  # osx
+    # args:
+    # - --login
+
+# Key bindings
+key_bindings:
+    - { key: V,        mods: Super, action: Paste                }
+    - { key: C,        mods: Super, action: Copy                 }
+    - { key: Q,        mods: Super, action: Quit                 }
+    - { key: W,        mods: Super, action: Quit                 }
+    - { key: Equals,   mods: Super, action: IncreaseFontSize     }
+    - { key: Subtract, mods: Super, action: DecreaseFontSize     }
+    - { key: Key0,     mods: Super, action: ResetFontSize        }
+    - { key: End,      mods: Shift, action: ScrollToBottom       }
+    - { key: Home,     mods: Shift, action: ScrollToTop          }
+    # Since we cannot set zoom factor we bind keys multiple times
+    - { key: U,        mods: Super, action: IncreaseFontSize     }
+    - { key: U,        mods: Super, action: IncreaseFontSize     }
+    - { key: U,        mods: Super, action: IncreaseFontSize     }
+    - { key: U,        mods: Super, action: IncreaseFontSize     }
+    - { key: U,        mods: Super, action: IncreaseFontSize     }
+    - { key: U,        mods: Super, action: IncreaseFontSize     }
+    - { key: U,        mods: Super, action: IncreaseFontSize     }
+    - { key: U,        mods: Super, action: IncreaseFontSize     }
+    - { key: U,        mods: Super, action: IncreaseFontSize     }
+    - { key: U,        mods: Super, action: IncreaseFontSize     }
+    - { key: U,        mods: Super, action: IncreaseFontSize     }
+    - { key: U,        mods: Super, action: IncreaseFontSize     }
+    - { key: U,        mods: Super, action: IncreaseFontSize     }
+    - { key: U,        mods: Super, action: IncreaseFontSize     }
+    - { key: U,        mods: Super, action: IncreaseFontSize     }
+    - { key: U,        mods: Super, action: IncreaseFontSize     }
+    - { key: U,        mods: Super, action: IncreaseFontSize     }
+    - { key: U,        mods: Super, action: IncreaseFontSize     }
+    - { key: D,        mods: Super, action: DecreaseFontSize     }
+    - { key: D,        mods: Super, action: DecreaseFontSize     }
+    - { key: D,        mods: Super, action: DecreaseFontSize     }
+    - { key: D,        mods: Super, action: DecreaseFontSize     }
+    - { key: D,        mods: Super, action: DecreaseFontSize     }
+    - { key: D,        mods: Super, action: DecreaseFontSize     }
+    - { key: D,        mods: Super, action: DecreaseFontSize     }
+    - { key: D,        mods: Super, action: DecreaseFontSize     }
+    - { key: D,        mods: Super, action: DecreaseFontSize     }
+    - { key: D,        mods: Super, action: DecreaseFontSize     }
+    - { key: D,        mods: Super, action: DecreaseFontSize     }
+    - { key: D,        mods: Super, action: DecreaseFontSize     }
+    - { key: D,        mods: Super, action: DecreaseFontSize     }
+    - { key: D,        mods: Super, action: DecreaseFontSize     }
+    - { key: D,        mods: Super, action: DecreaseFontSize     }
+    - { key: D,        mods: Super, action: DecreaseFontSize     }
+    - { key: D,        mods: Super, action: DecreaseFontSize     }
+    - { key: D,        mods: Super, action: DecreaseFontSize     }
+    # Vi mode
+    - { key: LBracket, mods: Control|Alt,  action: ToggleViMode  }
+    - { key: Q,        mode: Vi,           action: ToggleViMode  }
+    - { key: H,        mods: Shift, mode: Vi,  action: First     }
+    - { key: L,        mods: Shift, mode: Vi,  action: Last      }
+    # Tmux-like
+    - { key: P,        mods: Control|Alt,  action: Paste         }
+    # On OSX uncomment the following to enable alt maps
+    # - { key: D,        mods: Alt,   chars: "\x1bd"               }
+    # - { key: Z,        mods: Alt,   chars: "\x1bz"               }
+...

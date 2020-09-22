@@ -2,7 +2,7 @@
 <Font Size: 11.5>
 
 >> Up to down
-> text: #D4C6C6 BG: #212223
+> text: #D4C6C6 BG: #131314
 > bold text: #B80059
 > cursor: #FFFFFF  #BC3152
 > select:  #FFFFFF  #2A24E4

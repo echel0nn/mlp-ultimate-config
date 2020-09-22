@@ -1,5 +1,5 @@
 setxkbmap tr &
 init-wallpaper & 
-xinput set-prop "Razer Razer DeathAdder" --type=float "libinput Accel Speed" -1.0 &
+xsetroot -cursor_name left_ptr &
 echo -e "\tWelcome back master...\n\tWhat we are going to do today?" | pv -qL 25
 
