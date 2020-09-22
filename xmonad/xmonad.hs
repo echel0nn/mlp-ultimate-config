@@ -427,31 +427,31 @@ myLauncher          = "rofi -matching fuzzy -modi combi -show combi -combi-modi 
 -- * bindOn via X.A.ConditionalKeys
 
 -- TODO: change this to a lookup for all workspaces
-hangoutsCommand     = myBrowser ++ " --app-id=knipolnnllmklapflnccelgolnpehhpl"
-hangoutsTitle     = "Google Hangouts - Melih Tolga Şahin the_zge@live.nl"
-hangoutsPrefix      = "Google Hangouts"
-hangoutsResource    = "crx_nckgahadagoaajjgafhacjanaoiihapd"
+hangoutsCommand     = myBrowser ++ ""
+hangoutsTitle     = ""
+hangoutsPrefix      = ""
+hangoutsResource    = ""
 isHangoutsFor s     = (className =? myBrowserClass
                       <&&> fmap (isPrefixOf hangoutsPrefix) title
                       <&&> fmap (isInfixOf s) title)
-isPersonalHangouts  = isHangoutsFor "melihtolgasahin"
-isWorkHangouts      = isHangoutsFor "melihtolgasahin"
+isPersonalHangouts  = isHangoutsFor ""
+isWorkHangouts      = isHangoutsFor ""
 
 -- TODO: change this to a lookup for all workspaces
-trelloCommand       = "dex $HOME/.local/share/applications/Trello.desktop"
-trelloWorkCommand   = "dex $HOME/.local/share/applications/TrelloWork.desktop"
-trelloWork2Command  = "dex $HOME/.local/share/applications/TrelloWork2.desktop"
-trelloInfix         = "Trello"
-trelloResource      = "crx_jijnmpkkfkjaihbhffejemnpbbglahim"
-trelloWorkResource  = "crx_fkbbihpadkgbnhphndjgblgelahbiede"
-trelloWork2Resource = "crx_bgemgoheeofmogacohnlmpldjlogegoh"
+trelloCommand       = ""
+trelloWorkCommand   = ""
+trelloWork2Command  = ""
+trelloInfix         = ""
+trelloResource      = ""
+trelloWorkResource  = ""
+trelloWork2Resource = ""
 isTrello            = (resource =? trelloResource)
 isTrelloWork        = (resource =? trelloWorkResource)
 isTrelloWork2       = (resource =? trelloWork2Resource)
 
-googleMusicCommand  = "dex $HOME/.local/share/applications/Music.desktop"
-googleMusicInfix    = "Google Play Music"
-googleMusicResource = "crx_ioljlgoncmlkbcepmminebblkddfjofl"
+googleMusicCommand  = ""
+googleMusicInfix    = ""
+googleMusicResource = ""
 isGoogleMusic       = (resource =? googleMusicResource)
 
 plexCommand         = "dex $HOME/.local/share/applications/Plex.desktop"

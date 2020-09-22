@@ -22,4 +22,4 @@ FORE_SEL="$base03"
 FONT="xos4 Terminus:size=12:antialias=true:hinting=true"
 #dmenu -i -nb $BACK_NORMAL -nf $FORE_NORMAL -sb $BACK_SEL -sf $FORE_SEL -fn "$FONT"
 #dmenu -i -fn "xos4 Terminus:size=12:antialias=true:hinting=true"
-rofi -matching fuzzy -dmenu "${*:+-p}" "${*:-}: " -show drun -theme /home/unleashed/.rofi/arc-red-dark
+rofi -matching fuzzy -dmenu "${*:+-p}" "${*:-}: " -show drun -theme /home/zero/.rofi/arc-red-dark
