@@ -514,4 +514,8 @@ map tm :tabmove
 " gruvbox dark
 let g:gruvbox_contrast_dark='hard'
 " remap
+noremap  <silent>  <C-S>          :update<CR>
+noremap  <silent>  <F3>           :nohl<CR>
+vnoremap <silent> <C-S>         <C-C>:update<CR>
 autocmd FileType python noremap <buffer> <F8> :call Autopep8()<CR>
+autocmd FileType python noremap <buffer> <F2> :!./%<CR>
