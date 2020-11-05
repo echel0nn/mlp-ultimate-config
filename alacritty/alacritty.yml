@@ -14,13 +14,13 @@ window:
 
 font:
     normal:
-        family: Source Code Pro 
+        family: Cascadia Code 
         style: Regular
     bold:
-        family: Source Code Pro 
+        family: Cascadia Code 
         style: Bold
     italic:
-        family: Source Code Pro 
+        family: Cascadia Code  
         style: Italic
 
     # Point size of the font
@@ -29,8 +29,8 @@ font:
 # automatically based on the `normal` colors
 colors:
     primary:
-        background: '#131314'
-        foreground: '#d4c6c6'
+        background: '#140514'
+        foreground: '#ffe4fb'
     cursor:
         text: '#ffffff'    # black
         cursor: '#bc3152'
@@ -49,22 +49,22 @@ colors:
             foreground: '#abb2bf'
     normal:
         black:   '#e0c7ff'
-        red:     '#eb2180'
-        green:   '#e63d65'
-        yellow:  '#f9a2a2'
-        blue:    '#20c0ca'
-        magenta: '#ff007b'
-        cyan:    '#ef1f60'
-        white:   '#3d3bf4'
+        red:     '#f0cee0'
+        green:   '#f0a8c7'
+        yellow:  '#7988b5'
+        blue:    '#bd93f9'
+        magenta: '#dbc1d7'
+        cyan:    '#f07199'
+        white:   '#333333'
     bright:
-        black:   '#b8437C'
-        red:     '#e7e364'
-        green:   '#20c0ca'
-        yellow:  '#63d14e'
-        blue:    '#b80059'
+        black:   '#6b025b'
+        red:     '#f07199'
+        green:   '#f5da98'
+        yellow:  '#06c54f'
+        blue:    '#0679c5'
         magenta: '#c678dd'
         cyan:    '#fcf98c'
-        white:   '#da4b6d'
+        white:   '#7c5e78'
 
 mouse:
     hide_when_typing: false
@@ -80,7 +80,7 @@ selection:
 
 cursor:
     # Thickness of the cursor (number from `0.0` to `1.0`)
-    thickness: 0.06
+    thickness: 0.02
     # Vi mode cursor style
     vi_mode_style: Block
 
