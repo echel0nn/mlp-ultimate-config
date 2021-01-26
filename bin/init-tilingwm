@@ -36,7 +36,7 @@
 # lockscreen script if not already running. I can switch to i3lock in
 # that script (or others) as desired.
 
-xss-lock -- /home/echelon/bin/wm/lockscreen &
+xss-lock -- /home/unleashed/bin/wm/lockscreen &
 
 
 # ----------------------------------------------------------------------
@@ -105,7 +105,6 @@ unclutter --timeout 2 --fork
 # set wallpaper
 
 # doing this in xmonad so it happens at restart of the wm
-#feh --bg-fill /home/echelon/Resimler/Wallpapers/archlin.jpg &
 
 
 # ----------------------------------------------------------------------

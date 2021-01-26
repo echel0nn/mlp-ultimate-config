@@ -86,7 +86,7 @@ let s:is_dark=(&background == 'dark')
 let s:gb = {}
 
 " fill it with absolute colors
-let s:gb.dark0_hard  = ['#140514', 255]     " 29-32-33
+let s:gb.dark0_hard  = ['#140514', 234]     " 29-32-33
 let s:gb.dark0       = ['#282828', 235]     " 40-40-40
 let s:gb.dark0_soft  = ['#32302f', 236]     " 50-48-47
 let s:gb.dark1       = ['#3c3836', 237]     " 60-56-54
@@ -98,9 +98,9 @@ let s:gb.dark4_256   = ['#7c6f64', 243]     " 124-111-100
 let s:gb.gray_245    = ['#928374', 245]     " 146-131-116
 let s:gb.gray_244    = ['#928374', 244]     " 146-131-116
 
-let s:gb.light0_hard = ['#f8f2f7', 230]     " 249-245-215
-let s:gb.light0      = ['#f8f1c7', 229]     " 253-244-193
-let s:gb.light0_soft = ['#f8f287', 228]     " 242-229-188
+let s:gb.light0_hard = ['#f9f5d7', 230]     " 249-245-215
+let s:gb.light0      = ['#fbf1c7', 229]     " 253-244-193
+let s:gb.light0_soft = ['#f2e5bc', 228]     " 242-229-188
 let s:gb.light1      = ['#ebdbb2', 223]     " 235-219-178
 let s:gb.light2      = ['#d5c4a1', 250]     " 213-196-161
 let s:gb.light3      = ['#bdae93', 248]     " 189-174-147
@@ -113,8 +113,7 @@ let s:gb.bright_yellow  = ['#f0a8c7', 214]     " 250-189-47
 let s:gb.bright_blue    = ['#bc89c9', 109]     " 131-165-152
 let s:gb.bright_purple  = ['#bd93f9', 175]     " 211-134-155
 let s:gb.bright_aqua    = ['#d1b0cc', 108]     " 142-192-124
-let s:gb.bright_orange  = ['#f07199', 255]     " 254-128-25
-
+let s:gb.bright_orange  = ['#f07199', 208]     " 254-128-25
 
 let s:gb.neutral_red    = ['#cc241d', 124]     " 204-36-29
 let s:gb.neutral_green  = ['#98971a', 106]     " 152-151-26
@@ -122,7 +121,7 @@ let s:gb.neutral_yellow = ['#d79921', 172]     " 215-153-33
 let s:gb.neutral_blue   = ['#458588', 66]      " 69-133-136
 let s:gb.neutral_purple = ['#b16286', 132]     " 177-98-134
 let s:gb.neutral_aqua   = ['#689d6a', 72]      " 104-157-106
-let s:gb.neutral_orange = ['#b80059', 166]     " 214-93-14
+let s:gb.neutral_orange = ['#d65d0e', 166]     " 214-93-14
 
 let s:gb.faded_red      = ['#9d0006', 88]      " 157-0-6
 let s:gb.faded_green    = ['#79740e', 100]     " 121-116-14
@@ -130,9 +129,9 @@ let s:gb.faded_yellow   = ['#b57614', 136]     " 181-118-20
 let s:gb.faded_blue     = ['#076678', 24]      " 7-102-120
 let s:gb.faded_purple   = ['#8f3f71', 96]      " 143-63-113
 let s:gb.faded_aqua     = ['#427b58', 66]      " 66-123-88
-let s:gb.faded_orange   = ['#B80059', 255]     " 175-58-3
+let s:gb.faded_orange   = ['#af3a03', 130]     " 175-58-3
 
-"  }}}
+" }}}
 " Setup Emphasis: {{{
 
 let s:bold = 'bold,'
@@ -380,9 +379,9 @@ function! s:HL(group, fg, ...)
 
   " background
   if a:0 >= 1
-  let bg = a:1
+    let bg = a:1
   else
-  let bg = s:none
+    let bg = s:none
   endif
 
   " emphasis
@@ -455,6 +454,7 @@ call s:HL('GruvboxYellowSign', s:yellow, s:sign_column, s:invert_signs)
 call s:HL('GruvboxBlueSign', s:blue, s:sign_column, s:invert_signs)
 call s:HL('GruvboxPurpleSign', s:purple, s:sign_column, s:invert_signs)
 call s:HL('GruvboxAquaSign', s:aqua, s:sign_column, s:invert_signs)
+call s:HL('GruvboxOrangeSign', s:orange, s:sign_column, s:invert_signs)
 
 " }}}
 
@@ -468,9 +468,9 @@ call s:HL('Normal', s:fg1, s:bg0)
 " --- Problem with changing between dark and light on 256 color terminal
 " --- https://github.com/morhetz/gruvbox/issues/7
 if s:is_dark
-set background=dark
+  set background=dark
 else
-set background=light
+  set background=light
 endif
 
 if version >= 700
@@ -888,6 +888,30 @@ hi! link NERDTreeToggleOff GruvboxRed
 
 call s:HL('multiple_cursors_cursor', s:none, s:none, s:inverse)
 call s:HL('multiple_cursors_visual', s:none, s:bg2)
+
+" }}}
+" coc.nvim: {{{
+
+hi! link CocErrorSign GruvboxRedSign
+hi! link CocWarningSign GruvboxOrangeSign
+hi! link CocInfoSign GruvboxYellowSign
+hi! link CocHintSign GruvboxBlueSign
+hi! link CocErrorFloat GruvboxRed
+hi! link CocWarningFloat GruvboxOrange
+hi! link CocInfoFloat GruvboxYellow
+hi! link CocHintFloat GruvboxBlue
+hi! link CocDiagnosticsError GruvboxRed
+hi! link CocDiagnosticsWarning GruvboxOrange
+hi! link CocDiagnosticsInfo GruvboxYellow
+hi! link CocDiagnosticsHint GruvboxBlue
+
+hi! link CocSelectedText GruvboxRed
+hi! link CocCodeLens GruvboxGray
+
+call s:HL('CocErrorHighlight', s:none, s:none, s:undercurl, s:red)
+call s:HL('CocWarningHighlight', s:none, s:none, s:undercurl, s:orange)
+call s:HL('CocInfoHighlight', s:none, s:none, s:undercurl, s:yellow)
+call s:HL('CocHintHighlight', s:none, s:none, s:undercurl, s:blue)
 
 " }}}
 

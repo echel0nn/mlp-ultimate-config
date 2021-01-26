@@ -14,6 +14,7 @@ xdotool key alt+q
 notify-send "Shadowed IP"
 sleep 3 &&
 maim --format=png $SEL "$FILENAME"
+#maim -s --format png /dev/stdout | xclip -selection clipboard -t image/png -i
 echo -n $FILENAME | xclip -selection clipbard
 notify-send "Screen shot saved $FILENAME"
 rm ~/.xmonad/xmobar.conf
