@@ -12,7 +12,6 @@ call plug#begin('~/.vim/plugged')
 
 " Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
 Plug 'junegunn/vim-easy-align'
-Plug 'dense-analysis/ale'
 " Any valid git URL is allowed
 Plug 'https://github.com/junegunn/vim-github-dashboard.git'
 "Open File Under Cursor
@@ -22,19 +21,27 @@ Plug 'https://github.com/terryma/vim-expand-region.git'
 Plug 'https://github.com/terryma/vim-multiple-cursors.git'
 Plug 'https://github.com/michaeljsmith/vim-indent-object.git'
 Plug 'https://github.com/maxbrunsfeld/vim-yankstack.git'
-Plug 'https://github.com/fatih/vim-go'
 Plug 'https://github.com/amix/vim-zenroom2.git'
 Plug 'https://github.com/leafgarland/typescript-vim.git'
 Plug 'https://github.com/Vimjas/vim-python-pep8-indent.git'
 Plug 'https://github.com/vim-scripts/nginx.vim.git'
 Plug 'https://github.com/pangloss/vim-javascript.git'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'kassio/neoterm'
+"Plug 'itchyny/lightline.vim', {'branch': 'release'}
+" lets go for airline exp
+Plug 'vim-airline/vim-airline'
+Plug 'edkolev/promptline.vim'
+Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 " Multiple Plug commands can be written in a single line using | separators
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
-Plug 'https://github.com/tell-k/vim-autopep8.git'
+" NERDTree to CHADTree
+"Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': 'python3 -m chadtree deps'}
+Plug 'preservim/nerdtree'
+Plug 'ryanoasis/vim-devicons'
 " On-demand loading
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
+Plug 'a-vrma/black-nvim', {'do': ':UpdateRemotePlugins'}
 
 " Using a tagged release; wildcard allowed (requires git 1.9.2 or above)
 " Plug 'fatih/vim-go', { 'tag': '*' }
@@ -50,7 +57,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 call plug#end()
 
 nmap jj :helptags ~/.vim/doc<CR>
-autocmd VimEnter * NERDTree
+autocmd VimEnter * NERDTreeToggle
 set t_Co=256
 set nocompatible
 filetype on
@@ -97,9 +104,14 @@ set clipboard^=unnamedplus
 set viminfo='200
 set lazyredraw
 
+" experimental
+set shortmess+=c
+set signcolumn=yes
+
+
 syntax on
 
-set wrapmargin=8
+set wrapmargin=10
 set number
 set background=dark
 colorscheme gruvbox_edited
@@ -145,75 +157,16 @@ let s:modes = {
 
 let s:prev_mode = ""
 
-
-function! Whoaami()
-  let user = "UNLEASHED"
-  return user
-endfunction
-
-function! StatusLineMode()
-  let cur_mode = get(s:modes, mode(), '')
-
-  " do not update higlight if the mode is the same
-  if cur_mode == s:prev_mode
-    return cur_mode
-  endif
-
-  if cur_mode == "NORMAL"
-    exe 'hi! StatusLine ctermfg=236'
-    exe 'hi! myModeColor cterm=bold ctermbg=148 ctermfg=22'
-  elseif cur_mode == "INSERT"
-    exe 'hi! myModeColor cterm=bold ctermbg=23 ctermfg=231'
-  elseif cur_mode == "VISUAL" || cur_mode == "V-LINE" || cur_mode == "V_BLOCK"
-    exe 'hi! StatusLine ctermfg=236'
-    exe 'hi! myModeColor cterm=bold ctermbg=208 ctermfg=88'
-  endif
-
-  let s:prev_mode = cur_mode
-  return cur_mode
-endfunction
-
-
-let g:NERDTreeWinPos = "right"
-
-exe 'hi! myInfoColor ctermbg=240 ctermfg=252'
-
-" start building our statusline
-
-set statusline=
-" mode with custom colors
-set statusline+=%#myModeColor#
-set statusline+=%{StatusLineMode()}               
-set statusline+=%*
-
-" left information bar (after mode)
-set statusline+=%#myInfoColor#
-" set statusline+=\ %{StatusLineLeftInfo()}
-set statusline+=\ %*
-
-" go command status (requires vim-go)
-" set statusline+=%#goStatuslineColor#
-" set statusline+=%{go#statusline#Show()}
-set statusline+=%*
-
-" right section seperator
-set statusline+=%=
-
-" filetype, percentage, line number and column number
-set statusline+=%#myInfoColor#
-" set statusline+=\ {StatusLineFiletype()}\ %{StatusLinePercent()}\ %l:%v 
-"=====================================================
 "===================== MAPPINGS ======================
 
 " This comes first, because we have mappings that depend on leader
 " With a map leader it's possible to do extra key combinations
 " i.e: <leader>w saves the current file
-let mapleader = ","
+let mapleader = "."
 
 " Some useful quickfix shortcuts for quickfix
 map <C-n> :cn<CR>
 map <C-m> :cp<CR>
-nnoremap <leader>a :cclose<CR>
 
 " put quickfix window always to the bottom
 autocmd FileType qf wincmd J
@@ -229,21 +182,9 @@ nnoremap <silent> <leader>q :q!<CR>
 " Center the screen
 nnoremap <space> zz
 
-" Remove search highlight
-nnoremap <leader><space> :nohlsearch<CR>
-
-" Source the current Vim file
-nnoremap <leader>pr :Runtime<CR>
-
 " Close all but the current one
 nnoremap <leader>o :only<CR>
 
-" Space to :
-nnoremap <Space> :
-" x2 space to save &quit
-nnoremap <Space><Space> :wq<CR>
-" ctrl + space to save &quit
-nnoremap <C-Space> :q<CR>
 " é to toggle tree
 nnoremap " :NERDTreeToggle<CR> 
 
@@ -268,7 +209,7 @@ map <C-h> <C-W>h
 map <C-l> <C-W>l
 
 " Print full path
-map <C-f> :echo expand("%:p")<cr>
+map <C-x> :echo expand("%:p")<cr>
 
 " Visual linewise up and down by default (and use gj gk to go quicker)
 noremap <Up> gk
@@ -278,9 +219,6 @@ noremap k gk
 
 " Exit on jk
 imap jk <Esc>
-
-" Source (reload configuration)
-nnoremap <silent> <F5> :source $MYNVIMRC<CR>
 
 nnoremap <F6> :setlocal spell! spell?<CR>
 
@@ -337,76 +275,6 @@ endfunction
 vnoremap * :<C-u>call <SID>VSetSearch()<CR>//<CR><c-o>
 vnoremap # :<C-u>call <SID>VSetSearch()<CR>??<CR><c-o>
 
-" create a go doc comment based on the word under the cursor
-function! s:create_go_doc_comment()
-  norm "zyiw
-  execute ":put! z"
-  execute ":norm I// \<Esc>$"
-endfunction
-nnoremap <leader>ui :<C-u>call <SID>create_go_doc_comment()<CR>
-" ==================== vim-go ====================
-let g:go_fmt_fail_silently = 0
-let g:go_fmt_command = "goimports"
-let g:go_list_type = "quickfix"
-let g:go_auto_type_info = 0
-let g:go_def_mode = "guru"
-let g:go_echo_command_info = 1
-let g:go_gocode_autobuild = 0
-let g:go_gocode_unimported_packages = 1
-
-let g:go_autodetect_gopath = 1
-let g:go_info_mode = "guru"
-
-" let g:go_metalinter_autosave = 1
-" let g:go_metalinter_autosave_enabled = ['vet', 'golint']
-
-let g:go_highlight_space_tab_error = 0
-let g:go_highlight_array_whitespace_error = 0
-let g:go_highlight_trailing_whitespace_error = 0
-let g:go_highlight_extra_types = 0
-let g:go_highlight_build_constraints = 1
-let g:go_highlight_types = 0
-
-let g:go_modifytags_transform = 'camelcase'
-
-nmap <C-g> :GoDecls<cr>
-imap <C-g> <esc>:<C-u>GoDecls<cr>
-
-" run :GoBuild or :GoTestCompile based on the go file
-function! s:build_go_files()
-  let l:file = expand('%')
-  if l:file =~# '^\f\+_test\.go$'
-    call go#test#Test(0, 1)
-  elseif l:file =~# '^\f\+\.go$'
-    call go#cmd#Build(0)
-  endif
-endfunction
-
-augroup go
-  autocmd!
-
-  autocmd FileType go nmap <silent> <Leader>v <Plug>(go-def-vertical)
-  autocmd FileType go nmap <silent> <Leader>s <Plug>(go-def-split)
-
-  autocmd FileType go nmap <silent> <Leader>x <Plug>(go-doc-vertical)
-
-  autocmd FileType go nmap <silent> <Leader>i <Plug>(go-info)
-  autocmd FileType go nmap <silent> <Leader>l <Plug>(go-metalinter)
-
-  autocmd FileType go nmap <silent> <leader>b :<C-u>call <SID>build_go_files()<CR>
-  autocmd FileType go nmap <silent> <leader>t  <Plug>(go-test)
-  autocmd FileType go nmap <silent> <leader>r  <Plug>(go-run)
-  autocmd FileType go nmap <silent> <leader>e  <Plug>(go-install)
-
-  autocmd FileType go nmap <silent> <Leader>c <Plug>(go-coverage-toggle)
-
-  " I like these more!
-  autocmd Filetype go command! -bang A call go#alternate#Switch(<bang>0, 'edit')
-  autocmd Filetype go command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')
-  autocmd Filetype go command! -bang AS call go#alternate#Switch(<bang>0, 'split')
-  autocmd Filetype go command! -bang AT call go#alternate#Switch(<bang>0, 'tabe')
-augroup END
-
 " FZF key bindings
 nnoremap <C-f> :FZF<CR>
 let g:fzf_action = {
@@ -414,32 +282,7 @@ let g:fzf_action = {
   \ 'ctrl-i': 'split',
   \ 'ctrl-v': 'vsplit' }
 
-" lightline config
 "
-let g:lightline = {
-      \ 'colorscheme': 'one',
-      \ 'active': {
-      \   'right': [ [ 'lineinfo' ],
-      \              [ 'percent' ],
-      \              [ '', 'fileencoding', 'filetype' ],
-      \              ['whoami'] ],
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'readonly', 'filename' ] ],
-      \ },
-      \ 'component': {
-      \   'whoami': 'UNLEASHED'
-      \ },
-      \ 'component_function': {
-      \   'filename': 'LightlineFilename',
-      \ },
-      \ }
-
-function! LightlineFilename()
-  let filename = expand('%:t') !=# '' ? expand('%:t') : '[No Name]'
-  let modified = &modified ? ' +' : ''
-  return filename . modified
-endfunction
-
 " endless configure dontttcha
 set nosmd
 set noru
@@ -506,10 +349,32 @@ endif
 au InsertEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger     . " <C-R>=g:UltiSnips_Complete()<cr>"
 au InsertEnter * exec "inoremap <silent> " .     g:UltiSnipsJumpBackwardTrigger . " <C-R>=g:UltiSnips_Reverse()<cr>"
 " oynat uurcum
-map tn :tabnew<cr>
+map tt :T source ~/.promptline.sh<cr><C-W><C-W>i
+map TT :Ttoggle<cr>
+map tc :TcloseAll<cr>
 map to :tabonly<cr>
-map tc :tabclose<cr>
-map tm :tabmove
+
+" lets give a shot black fast settings
+let g:black#settings = {
+    \ 'fast': 1,
+    \ 'line_length': 100
+\}
+
+" new promptline
+let g:promptline_preset = 'full'
+let g:promptline_theme = 'airline'
+" sections (a, b, c, x, y, z, warn) are optional
+let g:promptline_preset = {
+        \'b' : [ promptline#slices#user() ],
+        \'c' : [ promptline#slices#cwd() ],
+        \'y' : [ promptline#slices#vcs_branch() ],
+        \'warn' : [ promptline#slices#last_exit_code() ]}
+let g:promptline_preset = {
+      \'a'    : [ '\h' ],
+      \'b'    : [ '\u' ],
+      \'c'    : [ '\w' ]}
+
+let g:neoterm_default_mod = 'botright'
 
 " gruvbox dark
 let g:gruvbox_contrast_dark='hard'
@@ -517,5 +382,13 @@ let g:gruvbox_contrast_dark='hard'
 noremap  <silent>  <C-S>          :update<CR>
 noremap  <silent>  <F3>           :nohl<CR>
 vnoremap <silent> <C-S>         <C-C>:update<CR>
-autocmd FileType python noremap <buffer> <F8> :call Autopep8()<CR>
+autocmd FileType python noremap <buffer> <F8> :call Black()<CR>
 autocmd FileType python noremap <buffer> <F2> :!./%<CR>
+
+autocmd FileType asm   noremap <buffer> <F2> :!gcc -nostdlib -static ./% -o ./%:t:r.bin<CR>
+autocmd FileType asm   noremap <buffer> <F3> :!objcopy --dump-section .text=./%:t:r-raw ./%:t:r.bin<CR>
+autocmd FileType asm   noremap <buffer> <F4> :!./%:t:r.bin<CR>
+autocmd FileType asm   noremap <buffer> <F5> :!strace ./%:t:r.bin<CR>
+autocmd FileType asm   noremap <buffer> <F6> :!base64 -w0 ./%:t:r-raw<CR>
+autocmd FileType python vnoremap <silent> # :s/^/#/<cr>:noh<cr>
+autocmd FileType python vnoremap <silent> -# :s/^#//<cr>:noh<cr>
