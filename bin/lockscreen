@@ -27,7 +27,7 @@ main () {
 	SCRIPTDIR=$(dirname $(readlink -f $0))
 
 	# TODO: better way to grab username
-	USERNAME=$(echo $SCRIPTDIR | sed "s_/home/\([^/]\+\).*_\1_")
+	USERNAME=$(whoami)
 
 	# make sure we have a properly owned cache file
 	CACHE=/home/$USERNAME/.cache/$SCRIPTNAME
@@ -37,9 +37,9 @@ main () {
 	housekeeping pre
 	cache_xrandr
 	notifications stop
-	lock_xscreensaver
+	#lock_xscreensaver
 	#lock_xscreensaver_new
-	#lock_i3lock_old
+	lock_i3lock_new
 	# xmonad_restart_if_display_change # mostly for xmobar/systray refresh
 	xmonad_restart_always
 	notifications start
