@@ -11,6 +11,7 @@ call plug#begin('~/.vim/plugged')
 " Make sure you use single quotes
 
 " Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
+Plug 'vim-airline/vim-airline-themes'
 Plug 'junegunn/vim-easy-align'
 " Any valid git URL is allowed
 Plug 'https://github.com/junegunn/vim-github-dashboard.git'
@@ -56,9 +57,12 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 " Initialize plugin system
 call plug#end()
 
+
+
+
 nmap jj :helptags ~/.vim/doc<CR>
 autocmd VimEnter * NERDTreeToggle
-set t_Co=256
+
 set nocompatible
 filetype on
 filetype plugin indent on
@@ -157,6 +161,11 @@ let s:modes = {
 
 let s:prev_mode = ""
 
+if exists('+termguicolors')
+  let &t_8f="\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b="\<Esc>[48;2;%lu;%lu;%lum"
+  set termguicolors
+endif
 "===================== MAPPINGS ======================
 
 " This comes first, because we have mappings that depend on leader
@@ -362,7 +371,8 @@ let g:black#settings = {
 
 " new promptline
 let g:promptline_preset = 'full'
-let g:promptline_theme = 'airline'
+let g:promptline_theme = 'raven'
+let g:airline_theme='raven'
 " sections (a, b, c, x, y, z, warn) are optional
 let g:promptline_preset = {
         \'b' : [ promptline#slices#user() ],
@@ -378,6 +388,11 @@ let g:neoterm_default_mod = 'botright'
 
 " gruvbox dark
 let g:gruvbox_contrast_dark='hard'
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+execute "set t_8f=\e[38;2;%lu;%lu;%lum"
+execute "set t_8b=\e[48;2;%lu;%lu;%lum"
 " remap
 noremap  <silent>  <C-S>          :update<CR>
 noremap  <silent>  <F3>           :nohl<CR>
