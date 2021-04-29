@@ -14,20 +14,22 @@ window:
 
 font:
     normal:
-        family: Delugia Mono Nerd Font
+        family: Delugia Nerd Font 
         style: Regular
     bold:
-        family: Delugia Mono Nerd Font
+        family: Delugia Nerd Font 
         style: Bold
     italic:
-        family: Delugia Mono Nerd Font 
+        family: Delugia Nerd Font 
         style: Italic
 
     # Point size of the font
     size: 18.5
+# Colors (One Dark); if dim colors are not set, they will be calculated
+# automatically based on the `normal` colors
 colors:
     primary:
-        background: '#121212'
+        background: '#140514'
         foreground: '#ffe4fb'
     cursor:
         text: '#ffffff'    # black

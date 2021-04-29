@@ -4,8 +4,8 @@
 --, additionalFonts    = ["xft:Raleway:size=12:antialias=true:hinting=true", "xft:Inconsolata for Powerline:size=12:antialias=true:hinting=true"]
 
 Config
-    { font              = "xft:SauceCodePro Nerd Font Mono:size=10:antialias=true:hinting=true"
-    , additionalFonts   = [ "xft:NotoEmoji:pixelsize=9:antialias=true" ]
+    { font              = "xft:NotoMono Nerd Font Mono:size=10:antialias=true:hinting=true"
+    , additionalFonts   = [ "xft:NotoEmoji Nerd Font Mono:pixelsize=9:antialias=true" ]
     , allDesktops       = False
     , bgColor           = "#212223"
     , fgColor           = "#fba"
@@ -86,6 +86,6 @@ Config
         ]
         , sepChar            = "%"
         , alignSep           = "}{"
-        , template           = " %StdinReader% }{ %nowplaying% %net% %default:Master% %battery% %br% %date% %kb%  "
+        , template           = " %StdinReader% }{  "
     }
 

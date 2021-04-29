@@ -393,7 +393,7 @@ projects =
 
 --myTerminal          = "terminator"
 --myTerminalClass     = "Terminator"
-myTerminal          = "gnome-terminal"
+myTerminal          = "kitty"
 volumeMute             = "pulseaudio-ctl mute"
 volumeUp         = "pulseaudio-ctl up"
 volumeDown       = "pulseaudio-ctl down"
@@ -403,7 +403,7 @@ myBrowserClass      = "Google-chrome-beta"
 myStatusBar         = "xmobar -x0 /home/unleashed/.xmonad/xmobar.conf"
 --myLauncher          = "dmenu_run"
 --myLauncher          = "rofi -matching fuzzy -show run"
-myLauncher          = "rofi -matching fuzzy -modi combi -show combi -combi-modi run,drun -theme /home/unleashed/.rofi/solarized-darker.rasi"
+myLauncher          = "rofi -matching fuzzy -modi combi -show combi -combi-modi run,drun -theme /home/unleashed/.rofi/cyberdunk.rasi"
 
 
 -- I'm using a custom browser launching script (see myBrowser above) that
