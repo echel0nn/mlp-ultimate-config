@@ -13,6 +13,8 @@ call plug#begin('~/.vim/plugged')
 " Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
 Plug 'vim-airline/vim-airline-themes'
 Plug 'junegunn/vim-easy-align'
+" rooter changes the working dir
+Plug 'https://github.com/airblade/vim-rooter.git'
 " Any valid git URL is allowed
 Plug 'https://github.com/junegunn/vim-github-dashboard.git'
 "Open File Under Cursor
@@ -127,6 +129,7 @@ autocmd FileType help wincmd L
 " filetypes
 
 autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4 
+autocmd BufNewFile,BufRead *.c setlocal noexpandtab tabstop=2 shiftwidth=2 
 
 autocmd BufNewFile,BufRead *.ino setlocal noet ts=4 sw=4 sts=4
 autocmd BufNewFile,BufRead *.txt setlocal noet ts=4 sw=4
@@ -286,10 +289,26 @@ vnoremap # :<C-u>call <SID>VSetSearch()<CR>??<CR><c-o>
 
 " FZF key bindings
 nnoremap <C-f> :FZF<CR>
-let g:fzf_action = {
-  \ 'ctrl-t': 'tab split',
-  \ 'ctrl-i': 'split',
-  \ 'ctrl-v': 'vsplit' }
+"let g:fzf_action = {
+"  \ 'ctrl-t': 'tab split',
+"  \ 'ctrl-i': 'split',
+"  \ 'ctrl-v': 'vsplit' }
+
+" Search pattern across repository files
+function! FzfExplore(...)
+    let inpath = substitute(a:1, "'", '', 'g')
+    if inpath == "" || matchend(inpath, '/') == strlen(inpath)
+        execute "cd" getcwd() . '/' . inpath
+        let cwpath = getcwd() . '/'
+        call fzf#run(fzf#wrap(fzf#vim#with_preview({'source': 'ls -1ap', 'dir': cwpath, 'sink': 'FZFExplore', 'options': ['--prompt', cwpath]})))
+    else
+        let file = getcwd() . '/' . inpath
+        execute "e" file
+    endif
+endfunction
+
+command! -nargs=* FZFExplore call FzfExplore(shellescape(<q-args>))
+
 
 "
 " endless configure dontttcha
@@ -366,7 +385,7 @@ map to :tabonly<cr>
 " lets give a shot black fast settings
 let g:black#settings = {
     \ 'fast': 1,
-    \ 'line_length': 100
+    \ 'line_length': 80
 \}
 
 " new promptline
@@ -384,21 +403,36 @@ let g:promptline_preset = {
       \'b'    : [ '\u' ],
       \'c'    : [ '\w' ]}
 
+" custom setting for clangformat
+let g:neoformat_cpp_clangformat = {
+    \ 'exe': 'clang-format',
+    \ 'args': ['--style="{IndentWidth: 2}"']
+\}
+let g:neoformat_enabled_cpp = ['clangformat']
+let g:neoformat_enabled_c = ['clangformat']
+
+
+
+" open terminal at bottom of window
 let g:neoterm_default_mod = 'botright'
 
 " gruvbox dark
 let g:gruvbox_contrast_dark='hard'
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+
+
 let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
 let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 execute "set t_8f=\e[38;2;%lu;%lu;%lum"
 execute "set t_8b=\e[48;2;%lu;%lu;%lum"
-" remap
+
+" cursed remap settings
 noremap  <silent>  <C-S>          :update<CR>
 noremap  <silent>  <F3>           :nohl<CR>
-vnoremap <silent> <C-S>         <C-C>:update<CR>
+noremap <silent> <C-t>         :tabnew<CR>
+noremap <silent> <C-w>         :tabclose<CR>
 autocmd FileType python noremap <buffer> <F8> :call Black()<CR>
-autocmd FileType python noremap <buffer> <F2> :!./%<CR>
+autocmd FileType python noremap <buffer> <F2> :!chmod +x ./% && ./%<CR>
 
 autocmd FileType asm   noremap <buffer> <F2> :!gcc -nostdlib -static ./% -o ./%:t:r.bin<CR>
 autocmd FileType asm   noremap <buffer> <F3> :!objcopy --dump-section .text=./%:t:r-raw ./%:t:r.bin<CR>
