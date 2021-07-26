@@ -31,8 +31,6 @@ Plug 'https://github.com/vim-scripts/nginx.vim.git'
 Plug 'https://github.com/pangloss/vim-javascript.git'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'kassio/neoterm'
-"Plug 'itchyny/lightline.vim', {'branch': 'release'}
-" lets go for airline exp
 Plug 'vim-airline/vim-airline'
 Plug 'edkolev/promptline.vim'
 Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
@@ -46,12 +44,8 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 Plug 'a-vrma/black-nvim', {'do': ':UpdateRemotePlugins'}
 
-" Using a tagged release; wildcard allowed (requires git 1.9.2 or above)
-" Plug 'fatih/vim-go', { 'tag': '*' }
-
 " Plugin options
 Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
-
 " Plugin outside ~/.vim/plugged with post-update hook
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 
@@ -59,10 +53,6 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 " Initialize plugin system
 call plug#end()
 
-
-
-
-nmap jj :helptags ~/.vim/doc<CR>
 autocmd VimEnter * NERDTreeToggle
 
 set nocompatible
@@ -105,16 +95,12 @@ set nocursorcolumn
 set nocursorline
 set updatetime=100
 set pumheight=10
-set clipboard^=unnamed
-set clipboard^=unnamedplus
+set clipboard+=unnamedplus
 set viminfo='200
 set lazyredraw
-
 " experimental
 set shortmess+=c
 set signcolumn=yes
-
-
 syntax on
 
 set wrapmargin=10
@@ -129,7 +115,7 @@ autocmd FileType help wincmd L
 " filetypes
 
 autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4 
-autocmd BufNewFile,BufRead *.c setlocal noexpandtab tabstop=2 shiftwidth=2 
+autocmd BufNewFile,BufRead *.c setlocal expandtab tabstop=2 shiftwidth=2 
 
 autocmd BufNewFile,BufRead *.ino setlocal noet ts=4 sw=4 sts=4
 autocmd BufNewFile,BufRead *.txt setlocal noet ts=4 sw=4
@@ -257,6 +243,8 @@ autocmd BufEnter * silent! lcd %:p:h
 
 " Do not show stupid q: window
 map q: :q
+map Q: :q
+map :Q :q
 command Q q
 
 " Don't move on * I'd use a function for this but Vim clobbers the last search
@@ -419,6 +407,21 @@ let g:neoterm_default_mod = 'botright'
 " gruvbox dark
 let g:gruvbox_contrast_dark='hard'
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+
+
+" stop using xclip
+let g:clipboard = {
+      \   'name': 'xsel_override',
+      \   'copy': {
+      \      '+': 'xsel --input --clipboard',
+      \      '*': 'xsel --input --primary',
+      \    },
+      \   'paste': {
+      \      '+': 'xsel --output --clipboard',
+      \      '*': 'xsel --output --primary',
+      \   },
+      \   'cache_enabled': 1,
+      \ }
 
 
 let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
