@@ -1,10 +1,10 @@
-Config { font            = "xft:CaskaydiaCove Nerd Font:size=12:antialias=true:hinting=true"
-       , additionalFonts = [ "xft:GohuFont Nerd Font Mono:size=14:antialias=true:hinting=true"
+Config { font            = "xft:JetBrainsMono NF:weight=bold:pixelsize=14:antialias=true:hinting=true"
+       , additionalFonts = [ "xft:Mononoki:pixelsize=14"
                            ,"xft:Font Awesome 6 Free Solid:pixelsize=14"
                            , "xft:Font Awesome 6 Brands:pixelsize=14"
                            ]
-       , bgColor      = "#131312"
-       , fgColor      = "#999"
+       , bgColor      = "#191919"
+       , fgColor      = "#d8dee9"
        , position       = TopSize L 100 30
        , lowerOnStart = True
        , hideOnStart  = False
@@ -34,9 +34,9 @@ Config { font            = "xft:CaskaydiaCove Nerd Font:size=12:antialias=true:h
                               -- charged status
                               , "-i"   , "<fn=2>\xf240</fn> <fc=#98be65>Full</fc>"
                     ] 50
-                    , Run Com "bash" ["/home/dante/.config/xmobar/scripts/mycheckupdates"] "check-updates" 1800
-                    , Run Com "/home/dante/.config/xmobar/trayer-padding-icon.sh" [] "trayerpad" 20
-                    , Run Network "enp37s0" ["-t", "<fn=2>\xf1eb</fn> <rx>kb <fn=2>\xf063</fn><fn=2>\xf062</fn> <tx>kb"] 20
+                    , Run Com "bash" ["/home/rd/.config/xmobar/scripts/mycheckupdates"] "check-updates" 1800
+                    , Run Com ".config/xmobar/trayer-padding-icon.sh" [] "trayerpad" 20
+                    , Run Network "wlp3s0" ["-t", "<fn=2>\xf1eb</fn> <rx>kb <fn=2>\xf063</fn><fn=2>\xf062</fn> <tx>kb"] 20
                     -- , Run Cpu ["-t", "<fn=2>\xf2db</fn> <total>%","-H","50","--high","red"] 20
                     , Run Cpu [ "--template", "<fc=#5699af><fn=2>\xf2db</fn> <total>%</fc>"
                               , "--Low","3"
@@ -46,14 +46,11 @@ Config { font            = "xft:CaskaydiaCove Nerd Font:size=12:antialias=true:h
                               , "--high","#ff6c6b"] 50
 
 		    , Run UnsafeStdinReader
-			, Run Com "status-vol" [] "volume" 5
-			, Run Com "status-net" [] "net" 100
-			, Run Com "status-keyboard" [] "kb" 10
-			, Run Com "status-spotify" [] "nowplaying" 10
-       			, Run Com "/usr/bin/whatismyip" [] "ip"  10
+
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = " <action=`kitty`><icon=haskell_20.xpm/></action> <fc=#666> DEVILINSIDE.ME |</fc> %UnsafeStdinReader%}{ %cpu%  %sep% %nowplaying% %sep% <fc=#b80059>%volume%</fc> %sep% %ip%  %sep% <fc=#b80059>%check-updates%</fc>  <fc=#dfdfdf>%enp37s0%</fc> %date% %time% "
+--       , template =  " %UnsafeStdinReader%}{<fc=><fc=#dfdfdf>%sep% %wlp3s0% </fc> <fc=#c678dd>%sep% %penguin% %uname%</fc><fc=#98be65> %sep% %up% %check-updates% updates</fc> <fc=#da8548>%sep% %baticon% %battery%</fc>  %date% <fc=#666666>%sep%</fc>%trayerpad%"
+       , template = " <action=`alacritty`><icon=haskell_20.xpm/></action> <fc=#666666>|</fc> %UnsafeStdinReader%}{ <action=`alacritty -e btop`>%cpu%</action> <fc=#dfdfdf>%sep% %wlp3s0%</fc><fc=#da8548> %sep% <action=`alacritty -e doas pacman -Syu --noconfirm`>%up% %check-updates%</action></fc> <fc=#da8548>%sep% %battery%</fc> <action=`emacsclient -c -a 'emacs' --eval '(doom/window-maximize-buffer(cfw:open-org-calendar))'`>%date%</action>%time% <fc=#666666>%sep%</fc>%trayerpad%"
       }
 

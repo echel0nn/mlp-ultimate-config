@@ -1,1 +1,1 @@
-ghc --make -threaded xmonad.hs -i -ilib -dynamic -fforce-recomp -main-is main -v0 -o xmonad-x86_64-linux
+ghc --make -threaded xmonad.hs -i -ilib -dynamic -fforce-recomp -main-is main -v0 -o xmonad-x86_64-linux -Wno-deprecations -Wno-tabs

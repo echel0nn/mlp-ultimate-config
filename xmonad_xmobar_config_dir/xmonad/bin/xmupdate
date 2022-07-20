@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+current_dir="$(pwd)"
+xmnd_cfg="$HOME/.config/xmonad"
+
+cd "$xmnd_cfg/xmonad"
+git pull
+cd "$xmnd_cfg/xmonad-contrib"
+git pull
+cd "$xmnd_cfg"
+stack install
+
+doas rm "/usr/bin/xmonad"
+doas cp "$HOME/.local/bin/xmonad" "/usr/bin/xmonad"
+
+xmonad --recompile
+xmonad --restart
+
+cd "$current_dir"

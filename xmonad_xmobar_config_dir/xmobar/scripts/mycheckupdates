@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# cupd=$(checkupdates | wc -l)
+cupd=$(checkupdates | wc -l)
+if [[ $cupd -eq "0\n" ]]; then
+	echo UPDATE Available: "$cupd"
+else
+
+	echo UP-TO-DATE!
+fi
+

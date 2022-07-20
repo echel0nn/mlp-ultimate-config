@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+
+echo """
+1 - view workspace 1
+2 - shift to workspace 1
+3 - view workspace 2
+4 - shift to workspace 2
+5 - view workspace 3
+6 - shift to workspace 3
+7 - view workspace 4
+8 - shift to workspace 4
+9 - view workspace 5
+10 - shift to workspace 5
+11 - view workspace 6
+12 - shift to workspace 6
+13 - view workspace 7
+14 - shift to workspace 7
+15 - view workspace 8
+16 - shift to workspace 8
+17 - view workspace 9
+18 - shift to workspace 9
+19 - select screen 0
+20 - shift to screen 0
+21 - select screen 1
+22 - shift to screen 1
+23 - shrink
+24 - expand
+25 - next layout
+26 - default layout
+27 - restart wm
+28 - restart wm no resume
+29 - xterm
+30 - run
+31 - kill
+32 - refresh
+33 - focus up
+34 - focus down
+35 - swap up
+36 - swap down
+37 - swap master
+38 - sink
+39 - quit wm
+"""

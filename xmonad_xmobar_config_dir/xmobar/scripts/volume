@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+volume="$(pamixer --get-volume-human)"
+level=${volume::-1}
+muted="$(pamixer --get-mute)"
+icons=("奄 " "奔 " "墳 " " ")
+
+if [[ "$muted" == "true" ]]; then
+	echo -e "婢"
+	# echo ""
+else
+	if [ "$level" -eq 0 ]; then 
+		icon=${icons[0]}
+	elif [ "$level" -le 20 ]; then
+		icon=${icons[1]}
+	elif [ "$level" -le 50 ]; then
+		icon=${icons[2]}
+	else
+		icon=${icons[3]}
+	fi
+	echo "$icon$level"
+fi
