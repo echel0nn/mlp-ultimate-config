@@ -1,15 +1,11 @@
 " NeoBundle Scripts-----------------------------
 if has('vim_starting')  
   "source ~/.vim_runtime/vimrcs/extended.vim
-.
 endif
 " Specify a directory for plugins
 " - For Neovim: stdpath('data') . '/plugged'
 " - Avoid using standard Vim directory names like 'plugin'
 call plug#begin('~/.vim/plugged')
-
-" Make sure you use single quotes
-
 " Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
 Plug 'vim-airline/vim-airline-themes'
 Plug 'junegunn/vim-easy-align'
@@ -17,6 +13,29 @@ Plug 'junegunn/vim-easy-align'
 Plug 'https://github.com/airblade/vim-rooter.git'
 " Any valid git URL is allowed
 Plug 'https://github.com/junegunn/vim-github-dashboard.git'
+" custom UI 
+Plug 'RishabhRD/popfix'
+Plug 'hood/popui.nvim'
+" navigator
+Plug 'neovim/nvim-lspconfig'
+Plug 'powerline/powerline-fonts'
+Plug 'ray-x/guihua.lua', {'do': 'cd lua/fzy && make' }
+Plug 'ray-x/navigator.lua'
+" crates
+Plug 'nvim-lua/plenary.nvim'
+Plug 'saecki/crates.nvim'
+Plug 'simrat39/rust-tools.nvim'
+Plug 'j-hui/fidget.nvim'
+" Completion framework
+Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-vsnip'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/vim-vsnip'
+" Debugging
+Plug 'nvim-lua/plenary.nvim'
+Plug 'mfussenegger/nvim-dap'
 "Open File Under Cursor
 Plug 'https://github.com/amix/open_file_under_cursor.vim.git'
 Plug 'https://github.com/tpope/vim-fugitive.git'
@@ -24,28 +43,20 @@ Plug 'https://github.com/terryma/vim-expand-region.git'
 Plug 'https://github.com/terryma/vim-multiple-cursors.git'
 Plug 'https://github.com/michaeljsmith/vim-indent-object.git'
 Plug 'https://github.com/maxbrunsfeld/vim-yankstack.git'
-Plug 'https://github.com/amix/vim-zenroom2.git'
 Plug 'https://github.com/leafgarland/typescript-vim.git'
 Plug 'https://github.com/Vimjas/vim-python-pep8-indent.git'
 Plug 'https://github.com/vim-scripts/nginx.vim.git'
 Plug 'https://github.com/pangloss/vim-javascript.git'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'kassio/neoterm'
 Plug 'vim-airline/vim-airline'
+Plug 'dense-analysis/ale'
 Plug 'edkolev/promptline.vim'
-Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
-" Multiple Plug commands can be written in a single line using | separators
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
-" NERDTree to CHADTree
-"Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': 'python3 -m chadtree deps'}
 Plug 'preservim/nerdtree'
 Plug 'ryanoasis/vim-devicons'
 " On-demand loading
-Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 Plug 'a-vrma/black-nvim', {'do': ':UpdateRemotePlugins'}
-
-" Plugin options
-Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
 " Plugin outside ~/.vim/plugged with post-update hook
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 
@@ -53,7 +64,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 " Initialize plugin system
 call plug#end()
 
-autocmd VimEnter * NERDTreeToggle
+autocmd VimEnter ` NERDTreeToggle
 
 set nocompatible
 filetype on
@@ -90,7 +101,7 @@ set noshowmatch
 set noshowmode
 set ignorecase
 set smartcase
-set completeopt=menu,menuone,preview
+set completeopt=menuone,noinsert,noselect
 set nocursorcolumn
 set nocursorline
 set updatetime=100
@@ -184,7 +195,7 @@ nnoremap <space> zz
 nnoremap <leader>o :only<CR>
 
 " é to toggle tree
-nnoremap " :NERDTreeToggle<CR> 
+nnoremap ` :NERDTreeToggle<CR> 
 
 " i dont fucking like cut D
 nnoremap x "_x
@@ -364,22 +375,25 @@ endif
 
 au InsertEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger     . " <C-R>=g:UltiSnips_Complete()<cr>"
 au InsertEnter * exec "inoremap <silent> " .     g:UltiSnipsJumpBackwardTrigger . " <C-R>=g:UltiSnips_Reverse()<cr>"
-" oynat uurcum
-map tt :T source ~/.promptline.sh<cr><C-W><C-W>i
-map TT :Ttoggle<cr>
-map tc :TcloseAll<cr>
-map to :tabonly<cr>
 
 " lets give a shot black fast settings
 let g:black#settings = {
     \ 'fast': 1,
-    \ 'line_length': 80
+    \ 'line_length': 100
 \}
 
 " new promptline
 let g:promptline_preset = 'full'
 let g:promptline_theme = 'raven'
 let g:airline_theme='raven'
+let g:airline_powerline_fonts = 1
+
+" airline symbols
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+
 " sections (a, b, c, x, y, z, warn) are optional
 let g:promptline_preset = {
         \'b' : [ promptline#slices#user() ],
@@ -399,10 +413,93 @@ let g:neoformat_cpp_clangformat = {
 let g:neoformat_enabled_cpp = ['clangformat']
 let g:neoformat_enabled_c = ['clangformat']
 
+" codeactions
+let g:code_action_menu_window_border = 'single'
 
+" popui setup
+" Available styles: "sharp" | "rounded" | "double"
+let g:popui_border_style = "rounded"
+" navigator setup
+lua require'navigator'.setup()
+lua require('crates').setup()
+lua require"fidget".setup{}
+lua require'lspconfig'.pyright.setup{}
+" TreeSitter Config
+lua <<EOF
+vim.g.code_action_menu_show_details = false
+vim.g.code_action_menu_show_diff = false
+vim.ui.select = require"popui.ui-overrider"
+vim.ui.input = require"popui.input-overrider"
+require'nvim-treesitter.configs'.setup {
+  -- A list of parser names, or "all"
+  ensure_installed = { "bash", "c", "cmake", "cpp", "css", "dockerfile",  "help", "html", "http", "javascript", "json",  "make", "markdown", "python", "regex", "rust", "toml", "vim", "yaml" },
 
-" open terminal at bottom of window
-let g:neoterm_default_mod = 'botright'
+  -- Install parsers synchronously (only applied to `ensure_installed`)
+  sync_install = false,
+
+  -- Automatically install missing parsers when entering buffer
+  auto_install = true,
+
+  highlight = {
+    enable = true,
+    additional_vim_regex_highlighting = false,
+  },
+}
+EOF
+
+lua <<EOF
+local nvim_lsp = require'lspconfig'
+
+local opts = {
+    tools = { -- rust-tools options
+        autoSetHints = false,
+        hover_with_actions = true,
+        inlay_hints = {
+            show_parameter_hints = false,
+            parameter_hints_prefix = "",
+            other_hints_prefix = "",
+        },
+    },
+}
+
+require('rust-tools').setup(opts)
+EOF
+" Setup Completion
+" See https://github.com/hrsh7th/nvim-cmp#basic-configuration
+lua <<EOF
+local cmp = require'cmp'
+cmp.setup({
+  -- Enable LSP snippets
+  snippet = {
+    expand = function(args)
+        vim.fn["vsnip#anonymous"](args.body)
+    end,
+  },
+  mapping = {
+    ['<C-p>'] = cmp.mapping.select_prev_item(),
+    ['<C-n>'] = cmp.mapping.select_next_item(),
+    -- Add tab support
+    ['<S-Tab>'] = cmp.mapping.select_prev_item(),
+    ['<Tab>'] = cmp.mapping.select_next_item(),
+    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-e>'] = cmp.mapping.close(),
+    ['<CR>'] = cmp.mapping.confirm({
+      behavior = cmp.ConfirmBehavior.Insert,
+      select = true,
+    })
+  },
+
+  -- Installed sources
+  sources = {
+    { name = 'nvim_lsp' },
+    { name = 'vsnip' },
+    { name = 'path' },
+    { name = 'buffer' },
+  },
+})
+EOF
 
 " gruvbox dark
 let g:gruvbox_contrast_dark='hard'
@@ -428,15 +525,29 @@ let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
 let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 execute "set t_8f=\e[38;2;%lu;%lu;%lum"
 execute "set t_8b=\e[48;2;%lu;%lu;%lum"
-
+autocmd CursorHold * lua vim.diagnostic.open_float(nil, { focusable = false })
 " cursed remap settings
+" Code navigation shortcuts
+nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
+nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
+nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
+nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
+nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
+nnoremap <silent> gd    <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> ga    <cmd>lua vim.lsp.buf.code_action()<CR>
+nnoremap <silent> g[ <cmd>lua vim.diagnostic.goto_prev()<CR>
+nnoremap <silent> g] <cmd>lua vim.diagnostic.goto_next()<CR>
+
 noremap  <silent>  <C-S>          :update<CR>
 noremap  <silent>  <F3>           :nohl<CR>
 noremap <silent> <C-t>         :tabnew<CR>
 noremap <silent> <C-w>         :tabclose<CR>
 autocmd FileType python noremap <buffer> <F8> :call Black()<CR>
 autocmd FileType python noremap <buffer> <F2> :!chmod +x ./% && ./%<CR>
-
+autocmd FileType rust noremap <buffer> <F2> :RustRun<CR>
 autocmd FileType asm   noremap <buffer> <F2> :!gcc -nostdlib -static ./% -o ./%:t:r.bin<CR>
 autocmd FileType asm   noremap <buffer> <F3> :!objcopy --dump-section .text=./%:t:r-raw ./%:t:r.bin<CR>
 autocmd FileType asm   noremap <buffer> <F4> :!./%:t:r.bin<CR>
