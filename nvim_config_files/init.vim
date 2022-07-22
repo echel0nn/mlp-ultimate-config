@@ -6,6 +6,7 @@ endif
 " - For Neovim: stdpath('data') . '/plugged'
 " - Avoid using standard Vim directory names like 'plugin'
 call plug#begin('~/.vim/plugged')
+" razer rgb controller
 " Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
 Plug 'vim-airline/vim-airline-themes'
 Plug 'junegunn/vim-easy-align'
@@ -26,6 +27,7 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'saecki/crates.nvim'
 Plug 'simrat39/rust-tools.nvim'
 Plug 'j-hui/fidget.nvim'
+Plug 'https://github.com/preservim/tagbar'
 " Completion framework
 Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-nvim-lsp'
@@ -577,9 +579,20 @@ nnoremap <silent> g[ <cmd>lua vim.diagnostic.goto_prev()<CR>
 nnoremap <silent> g] <cmd>lua vim.diagnostic.goto_next()<CR>
 
 noremap  <silent>  <C-S>          :update<CR>
+noremap  <silent>  <F1>          :Tagbar<CR>
 noremap  <silent>  <F3>           :nohl<CR>
+
 noremap <silent> <C-t>         :tabnew<CR>
 noremap <silent> <C-w>         :tabclose<CR>
+nnoremap <C-DOWN> <C-W><C-J>
+nnoremap <C-UP> <C-W><C-K>
+nnoremap <C-RIGHT> <C-W><C-L>
+nnoremap <C-LEFT> <C-W><C-H>
+nnoremap <C-H> <C-A><Left>
+nnoremap <C-J> <C-A><Down>
+nnoremap <C-K> <C-A><Up>
+nnoremap <C-L> <C-A><Right>
+
 autocmd FileType python noremap <buffer> <F8> :call Black()<CR>
 autocmd FileType python noremap <buffer> <F2> :!chmod +x ./% && ./%<CR>
 autocmd FileType rust noremap <buffer> <F2> :RustRun<CR>
