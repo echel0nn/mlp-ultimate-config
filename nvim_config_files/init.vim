@@ -19,6 +19,7 @@ Plug 'RishabhRD/popfix'
 Plug 'hood/popui.nvim'
 " navigator
 Plug 'neovim/nvim-lspconfig'
+" fix icons airline
 Plug 'powerline/powerline-fonts'
 Plug 'ray-x/guihua.lua', {'do': 'cd lua/fzy && make' }
 Plug 'ray-x/navigator.lua'
@@ -26,7 +27,7 @@ Plug 'ray-x/navigator.lua'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'saecki/crates.nvim'
 Plug 'simrat39/rust-tools.nvim'
-Plug 'j-hui/fidget.nvim'
+" Plug 'j-hui/fidget.nvim'
 Plug 'https://github.com/preservim/tagbar'
 " Completion framework
 Plug 'hrsh7th/nvim-cmp'
@@ -129,6 +130,7 @@ autocmd FileType help wincmd L
 
 autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4 
 autocmd BufNewFile,BufRead *.c setlocal expandtab tabstop=2 shiftwidth=2 
+autocmd BufNewFile,BufRead *.rs setlocal expandtab tabstop=4 shiftwidth=4
 
 autocmd BufNewFile,BufRead *.ino setlocal noet ts=4 sw=4 sts=4
 autocmd BufNewFile,BufRead *.txt setlocal noet ts=4 sw=4
@@ -420,14 +422,17 @@ let g:code_action_menu_window_border = 'single'
 
 " popui setup
 " Available styles: "sharp" | "rounded" | "double"
-let g:popui_border_style = "rounded"
+let g:popui_border_style = "sharp"
 " navigator setup
 lua require'navigator'.setup()
 lua require('crates').setup()
-lua require"fidget".setup{}
+" lua require"fidget".setup{}
 lua require'lspconfig'.pyright.setup{}
+let g:LanguageClient_hoverPreview = 'always'
+
 " TreeSitter Config
 lua <<EOF
+vim.lsp.handlers["textDocument/publishDiagnostics"] = function() end
 vim.g.code_action_menu_show_details = false
 vim.g.code_action_menu_show_diff = false
 vim.ui.select = require"popui.ui-overrider"
@@ -480,6 +485,10 @@ local opts = {
                       importEnforceGranularity = true,
                       importPrefix = "by_self",
                     },
+                    diagnostics = {
+                      enable = false,
+                      disabled = "inactive-code",
+                    },
                     cargo = {
                       loadOutDirsFromCheck = true,
                       allFeatures = true,
@@ -489,7 +498,7 @@ local opts = {
                     },
                     inlayHints = {
                       lifetimeElisionHints = {
-                        enable = true,
+                        enable = false,
                         useParameterNames = true
                         },
                     },
@@ -557,7 +566,7 @@ let g:clipboard = {
       \   'cache_enabled': 1,
       \ }
 
-
+let b:coc_diagnostic_disable=1
 let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
 let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 execute "set t_8f=\e[38;2;%lu;%lu;%lum"
@@ -577,6 +586,7 @@ nnoremap <silent> gd    <cmd>lua vim.lsp.buf.definition()<CR>
 nnoremap <silent> ga    <cmd>lua vim.lsp.buf.code_action()<CR>
 nnoremap <silent> g[ <cmd>lua vim.diagnostic.goto_prev()<CR>
 nnoremap <silent> g] <cmd>lua vim.diagnostic.goto_next()<CR>
+nnoremap <silent> g, :lua require'popui.diagnostics-navigator'()<CR>
 
 noremap  <silent>  <C-S>          :update<CR>
 noremap  <silent>  <F1>          :Tagbar<CR>
@@ -595,7 +605,12 @@ nnoremap <C-L> <C-A><Right>
 
 autocmd FileType python noremap <buffer> <F8> :call Black()<CR>
 autocmd FileType python noremap <buffer> <F2> :!chmod +x ./% && ./%<CR>
+
 autocmd FileType rust noremap <buffer> <F2> :RustRun<CR>
+autocmd FileType rust noremap <buffer> <F5> :!cargo build<CR>
+autocmd FileType rust   noremap <buffer> <F6> :!cargo run<CR>
+autocmd FileType rust   noremap <buffer> <F7> :!cargo build --release<CR>
+
 autocmd FileType asm   noremap <buffer> <F2> :!gcc -nostdlib -static ./% -o ./%:t:r.bin<CR>
 autocmd FileType asm   noremap <buffer> <F3> :!objcopy --dump-section .text=./%:t:r-raw ./%:t:r.bin<CR>
 autocmd FileType asm   noremap <buffer> <F4> :!./%:t:r.bin<CR>
