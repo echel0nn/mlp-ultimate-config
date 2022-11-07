@@ -6,10 +6,9 @@ endif
 " - For Neovim: stdpath('data') . '/plugged'
 " - Avoid using standard Vim directory names like 'plugin'
 call plug#begin('~/.vim/plugged')
-" razer rgb controller
-" Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
 Plug 'vim-airline/vim-airline-themes'
-Plug 'junegunn/vim-easy-align'
+" install ttf-joypixels with paru!
+Plug 'junegunn/vim-emoji'
 " rooter changes the working dir
 Plug 'https://github.com/airblade/vim-rooter.git'
 " Any valid git URL is allowed
@@ -19,6 +18,7 @@ Plug 'RishabhRD/popfix'
 Plug 'hood/popui.nvim'
 " navigator
 Plug 'neovim/nvim-lspconfig'
+Plug 'nvim-lua/lsp_extensions.nvim'
 " fix icons airline
 Plug 'powerline/powerline-fonts'
 Plug 'ray-x/guihua.lua', {'do': 'cd lua/fzy && make' }
@@ -37,22 +37,16 @@ Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/vim-vsnip'
 " Debugging
-Plug 'nvim-lua/plenary.nvim'
 Plug 'mfussenegger/nvim-dap'
 "Open File Under Cursor
 Plug 'https://github.com/amix/open_file_under_cursor.vim.git'
+Plug 'https://github.com/jose-elias-alvarez/null-ls.nvim.git'
 Plug 'https://github.com/tpope/vim-fugitive.git'
 Plug 'https://github.com/terryma/vim-expand-region.git'
 Plug 'https://github.com/terryma/vim-multiple-cursors.git'
 Plug 'https://github.com/michaeljsmith/vim-indent-object.git'
-Plug 'https://github.com/maxbrunsfeld/vim-yankstack.git'
-Plug 'https://github.com/leafgarland/typescript-vim.git'
-Plug 'https://github.com/Vimjas/vim-python-pep8-indent.git'
 Plug 'https://github.com/vim-scripts/nginx.vim.git'
 Plug 'https://github.com/pangloss/vim-javascript.git'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'vim-airline/vim-airline'
-Plug 'dense-analysis/ale'
 Plug 'edkolev/promptline.vim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
@@ -62,7 +56,12 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'a-vrma/black-nvim', {'do': ':UpdateRemotePlugins'}
 " Plugin outside ~/.vim/plugged with post-update hook
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-
+" MASONLSPCONFIG
+Plug 'williamboman/mason.nvim'
+Plug 'williamboman/mason-lspconfig.nvim'
+Plug 'neovim/nvim-lspconfig'
+Plug 'kyazdani42/nvim-web-devicons'
+Plug 'folke/trouble.nvim'
 
 " Initialize plugin system
 call plug#end()
@@ -426,15 +425,12 @@ let g:popui_border_style = "sharp"
 " navigator setup
 lua require'navigator'.setup()
 lua require('crates').setup()
-" lua require"fidget".setup{}
-lua require'lspconfig'.pyright.setup{}
-let g:LanguageClient_hoverPreview = 'always'
 
 " TreeSitter Config
 lua <<EOF
 vim.lsp.handlers["textDocument/publishDiagnostics"] = function() end
 vim.g.code_action_menu_show_details = false
-vim.g.code_action_menu_show_diff = false
+vim.g.code_action_menu_show_diff = true
 vim.ui.select = require"popui.ui-overrider"
 vim.ui.input = require"popui.input-overrider"
 require'nvim-treesitter.configs'.setup {
@@ -453,14 +449,39 @@ require'nvim-treesitter.configs'.setup {
   },
 }
 EOF
-
+lua <<EOF
+require'nvim-web-devicons'.setup {
+ -- your personnal icons can go here (to override)
+ -- you can specify color or cterm_color instead of specifying both of them
+ -- DevIcon will be appended to `name`
+ override = {
+  zsh = {
+    icon = "",
+    color = "#428850",
+    cterm_color = "65",
+    name = "Zsh"
+  }
+ };
+ -- globally enable different highlight colors per icon (default to true)
+ -- if set to false all icons will have the default icon's color
+ color_icons = true;
+ -- globally enable default icons (default to false)
+ -- will get overriden by `get_icons` option
+ default = true;
+}
+EOF
+lua <<EOF
+require("mason").setup()
+require("mason-lspconfig").setup({
+    ensure_installed = { "pyright", "rust_analyzer", "cmake", "clangd", "dockerls", "tsserver" }
+})
+EOF
 lua <<EOF
 local nvim_lsp = require'lspconfig'
 
 local opts = {
     tools = { -- rust-tools options
         autoSetHints = false,
-        hover_with_actions = true,
         inlay_hints = {
             show_parameter_hints = false,
             parameter_hints_prefix = "",
@@ -507,8 +528,8 @@ local opts = {
         standalone = false,
     }
 }
-
 require('rust-tools').setup(opts)
+require('lspconfig').pyright.setup{}
 EOF
 " Setup Completion
 " See https://github.com/hrsh7th/nvim-cmp#basic-configuration
@@ -550,7 +571,7 @@ EOF
 " gruvbox dark
 let g:gruvbox_contrast_dark='hard'
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-
+let g:ale_disable_lsp = 1
 
 " stop using xclip
 let g:clipboard = {
@@ -566,7 +587,6 @@ let g:clipboard = {
       \   'cache_enabled': 1,
       \ }
 
-let b:coc_diagnostic_disable=1
 let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
 let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 execute "set t_8f=\e[38;2;%lu;%lu;%lum"
