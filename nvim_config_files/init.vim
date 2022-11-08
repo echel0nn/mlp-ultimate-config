@@ -19,6 +19,7 @@ Plug 'https://github.com/junegunn/vim-github-dashboard.git'
 Plug 'RishabhRD/popfix'
 Plug 'romgrk/barbar.nvim'
 Plug 'lewis6991/impatient.nvim'
+Plug 'liuchengxu/vista.vim'
 " navigator
 " fix icons airline
 Plug 'powerline/powerline-fonts'
@@ -637,6 +638,7 @@ nnoremap <silent> g. :lua require'popui.diagnostics-navigator'()<CR>
 nnoremap xx <cmd>TroubleToggle<cr>
 noremap  <silent>  <C-S>          :update<CR>
 noremap  <silent>  <F3>           :nohl<CR>
+noremap  <silent>  <F1>           :Vista!!<CR>
 
 noremap <silent> <C-t>         :tabnew<CR>
 noremap <silent> <C-w>         :tabclose<CR>
@@ -665,5 +667,6 @@ autocmd FileType asm   noremap <buffer> <F3> :!objcopy --dump-section .text=./%:
 autocmd FileType asm   noremap <buffer> <F4> :!./%:t:r.bin<CR>
 autocmd FileType asm   noremap <buffer> <F5> :!strace ./%:t:r.bin<CR>
 autocmd FileType asm   noremap <buffer> <F6> :!base64 -w0 ./%:t:r-raw<CR>
+
 autocmd FileType python vnoremap <silent> # :s/^/#/<cr>:noh<cr>
 autocmd FileType python vnoremap <silent> -# :s/^#//<cr>:noh<cr>
