@@ -17,7 +17,8 @@ Plug 'https://github.com/airblade/vim-rooter.git'
 Plug 'https://github.com/junegunn/vim-github-dashboard.git'
 " custom UI 
 Plug 'RishabhRD/popfix'
-Plug 'akinsho/bufferline.nvim', { 'tag': 'v3.*' }
+Plug 'romgrk/barbar.nvim'
+Plug 'lewis6991/impatient.nvim'
 " navigator
 " fix icons airline
 Plug 'powerline/powerline-fonts'
@@ -372,6 +373,8 @@ let g:promptline_preset = 'full'
 let g:promptline_theme = 'raven'
 let g:airline_theme='raven'
 let g:airline_powerline_fonts = 1
+let bufferline = get(g:, 'bufferline', {})
+let bufferline.no_name_title = v:null
 
 " airline symbols
 let g:airline_left_sep = ''
@@ -409,7 +412,6 @@ let g:code_action_menu_window_border = 'single'
 " navigator setup
 lua require('crates').setup()
 lua require('terminal').config()
-lua require('bufferline').setup()
 
 " TreeSitter Config
 lua <<EOF
@@ -594,7 +596,6 @@ EOF
 " gruvbox dark
 let g:gruvbox_contrast_dark='hard'
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-let g:ale_disable_lsp = 1
 
 " stop using xclip
 let g:clipboard = {
