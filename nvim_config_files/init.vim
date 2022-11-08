@@ -1,4 +1,4 @@
-" NeoBundle Scripts-----------------------------
+"NeoBundle Scripts-----------------------------
 if has('vim_starting')  
   "source ~/.vim_runtime/vimrcs/extended.vim
 endif
@@ -6,7 +6,9 @@ endif
 " - For Neovim: stdpath('data') . '/plugged'
 " - Avoid using standard Vim directory names like 'plugin'
 call plug#begin('~/.vim/plugged')
+Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'sbdchd/neoformat'
 " install ttf-joypixels with paru!
 Plug 'junegunn/vim-emoji'
 " rooter changes the working dir
@@ -15,10 +17,8 @@ Plug 'https://github.com/airblade/vim-rooter.git'
 Plug 'https://github.com/junegunn/vim-github-dashboard.git'
 " custom UI 
 Plug 'RishabhRD/popfix'
-Plug 'hood/popui.nvim'
+Plug 'akinsho/bufferline.nvim', { 'tag': 'v3.*' }
 " navigator
-Plug 'neovim/nvim-lspconfig'
-Plug 'nvim-lua/lsp_extensions.nvim'
 " fix icons airline
 Plug 'powerline/powerline-fonts'
 Plug 'ray-x/guihua.lua', {'do': 'cd lua/fzy && make' }
@@ -27,8 +27,6 @@ Plug 'ray-x/navigator.lua'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'saecki/crates.nvim'
 Plug 'simrat39/rust-tools.nvim'
-" Plug 'j-hui/fidget.nvim'
-Plug 'https://github.com/preservim/tagbar'
 " Completion framework
 Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-nvim-lsp'
@@ -42,6 +40,7 @@ Plug 'mfussenegger/nvim-dap'
 Plug 'https://github.com/amix/open_file_under_cursor.vim.git'
 Plug 'https://github.com/jose-elias-alvarez/null-ls.nvim.git'
 Plug 'https://github.com/tpope/vim-fugitive.git'
+Plug 'https://github.com/maxbrunsfeld/vim-yankstack.git'
 Plug 'https://github.com/terryma/vim-expand-region.git'
 Plug 'https://github.com/terryma/vim-multiple-cursors.git'
 Plug 'https://github.com/michaeljsmith/vim-indent-object.git'
@@ -57,12 +56,14 @@ Plug 'a-vrma/black-nvim', {'do': ':UpdateRemotePlugins'}
 " Plugin outside ~/.vim/plugged with post-update hook
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 " MASONLSPCONFIG
-Plug 'williamboman/mason.nvim'
-Plug 'williamboman/mason-lspconfig.nvim'
-Plug 'neovim/nvim-lspconfig'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'folke/trouble.nvim'
-
+Plug 'akinsho/toggleterm.nvim', {'tag' : '*'}
+Plug 'williamboman/mason.nvim'
+Plug 'WhoIsSethDaniel/mason-tool-installer.nvim'
+Plug 'williamboman/mason-lspconfig.nvim'
+Plug 'neovim/nvim-lspconfig'
+Plug 'nvim-lua/lsp_extensions.nvim'
 " Initialize plugin system
 call plug#end()
 
@@ -80,7 +81,7 @@ set termguicolors
 let g:python3_host_prog='/usr/bin/python3'
 let g:python_host_prog='/usr/bin/python2.7'
 
-set laststatus=2
+set laststatus=0
 set encoding=utf-8
 set autoread
 set autoindent
@@ -129,6 +130,7 @@ autocmd FileType help wincmd L
 
 autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4 
 autocmd BufNewFile,BufRead *.c setlocal expandtab tabstop=2 shiftwidth=2 
+autocmd BufNewFile,BufRead *.cpp setlocal expandtab tabstop=2 shiftwidth=2 
 autocmd BufNewFile,BufRead *.rs setlocal expandtab tabstop=4 shiftwidth=4
 
 autocmd BufNewFile,BufRead *.ino setlocal noet ts=4 sw=4 sts=4
@@ -319,30 +321,9 @@ set noru
 set laststatus=2
 set cmdheight=1
 
-" Coc-Snippets
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? coc#_select_confirm() :
-      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
-let g:coc_snippet_next = '<tab>'
 "
 let g:NERDTreeWinPos = "right"
 
-"let g:UltiSnipsSnippetsDir = '/home/echelon/.config/nvim/UltiSnips/'
-""let g:UltiSnipsSnippetDirectories = ['UltiSnips']
-
-"let g:UltiSnipsEditSplit="vertical"
-"let g:UltiSnipsExpandTrigger="<TAB>"
-"let g:UltiSnipsJumpForwardTrigger="<s-tab>"
-"let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-"=
 function! g:UltiSnips_Complete()
   call UltiSnips#ExpandSnippet()
   if g:ulti_expand_res == 0
@@ -368,6 +349,8 @@ function! g:UltiSnips_Reverse()
 endfunction
 
 
+let g:UltSnipsListSnippets = "<tab>"
+
 if !exists("g:UltiSnipsJumpForwardTrigger")
   let g:UltiSnipsJumpForwardTrigger = "<tab>"
 endif
@@ -375,7 +358,6 @@ endif
 if !exists("g:UltiSnipsJumpBackwardTrigger")
   let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 endif
-
 au InsertEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger     . " <C-R>=g:UltiSnips_Complete()<cr>"
 au InsertEnter * exec "inoremap <silent> " .     g:UltiSnipsJumpBackwardTrigger . " <C-R>=g:UltiSnips_Reverse()<cr>"
 
@@ -409,6 +391,11 @@ let g:promptline_preset = {
       \'c'    : [ '\w' ]}
 
 " custom setting for clangformat
+let g:neoformat_run_all_formatters = 1
+let g:neoformat_c_clangformat = {
+    \ 'exe': 'clang-format',
+    \ 'args': ['--style="{IndentWidth: 2}"']
+\}
 let g:neoformat_cpp_clangformat = {
     \ 'exe': 'clang-format',
     \ 'args': ['--style="{IndentWidth: 2}"']
@@ -419,20 +406,13 @@ let g:neoformat_enabled_c = ['clangformat']
 " codeactions
 let g:code_action_menu_window_border = 'single'
 
-" popui setup
-" Available styles: "sharp" | "rounded" | "double"
-let g:popui_border_style = "sharp"
 " navigator setup
-lua require'navigator'.setup()
 lua require('crates').setup()
+lua require('terminal').config()
+lua require('bufferline').setup()
 
 " TreeSitter Config
 lua <<EOF
-vim.lsp.handlers["textDocument/publishDiagnostics"] = function() end
-vim.g.code_action_menu_show_details = false
-vim.g.code_action_menu_show_diff = true
-vim.ui.select = require"popui.ui-overrider"
-vim.ui.input = require"popui.input-overrider"
 require'nvim-treesitter.configs'.setup {
   -- A list of parser names, or "all"
   ensure_installed = { "bash", "c", "cmake", "cpp", "css", "dockerfile",  "help", "html", "http", "javascript", "json",  "make", "markdown", "python", "regex", "rust", "toml", "vim", "yaml" },
@@ -473,63 +453,106 @@ EOF
 lua <<EOF
 require("mason").setup()
 require("mason-lspconfig").setup({
-    ensure_installed = { "pyright", "rust_analyzer", "cmake", "clangd", "dockerls", "tsserver" }
-})
-EOF
-lua <<EOF
-local nvim_lsp = require'lspconfig'
-
-local opts = {
-    tools = { -- rust-tools options
-        autoSetHints = false,
-        inlay_hints = {
-            show_parameter_hints = false,
-            parameter_hints_prefix = "",
-            other_hints_prefix = "",
-        },
-        cache = true,
-        hover_actions = { border = false},
-    },
-
-    -- all the opts to send to nvim-lspconfig
-    -- these override the defaults set by rust-tools.nvim
-    -- see https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#rust_analyzer
-    server = {
-        -- on_attach is a callback called when the language server attachs to the buffer
-        -- on_attach = on_attach,
-        settings = {
-            -- to enable rust-analyzer settings visit:
-            -- https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/user/generated_config.adoc
-            ["rust-analyzer"] = {
-              			assist = {
-                      importGranularity = "module",
-                      importEnforceGranularity = true,
-                      importPrefix = "by_self",
-                    },
-                    diagnostics = {
-                      enable = false,
-                      disabled = "inactive-code",
-                    },
-                    cargo = {
-                      loadOutDirsFromCheck = true,
-                      allFeatures = true,
-                    },
-                    procMacro = {
-                      enable = true,
-                    },
-                    inlayHints = {
-                      lifetimeElisionHints = {
-                        enable = false,
-                        useParameterNames = true
-                        },
-                    },
-            }
-        },
-        standalone = false,
+    ensure_installed = { "sumneko_lua",
+    "rust_analyzer", 
+    "clangd",
+    "pyright",
     }
+})
+require('mason-tool-installer').setup {
+    ensure_installed = { 
+    "autoflake", 
+    "bash-language-server",
+    "black",
+    "clang-format",
+    "cmakelang",
+    "cpplint",
+    "css-lsp",
+    "jq",
+    "jsonlint",
+    "lua-language-server",
+    "markdownlint",
+    "rstcheck",
+    "rustfmt",
+    "vim-language-server",
+  },
+  auto_update = false,
+  run_on_start = true,
+
+  -- set a delay (in ms) before the installation starts. This is only
+  -- effective if run_on_start is set to true.
+  -- e.g.: 5000 = 5 second delay, 10000 = 10 second delay, etc...
+  -- Default: 0
+  start_delay = 1000, -- 3 second delay
 }
-require('rust-tools').setup(opts)
-require('lspconfig').pyright.setup{}
+require("lspconfig").sumneko_lua.setup {}
+require("lspconfig").rust_analyzer.setup {}
+-- WORKAROUND: WHY THE FUCK CLANGD RUNS TWO INSTANCE? require("lspconfig").clangd.setup {}
+require("lspconfig").pyright.setup {
+  capabilities = capabilities,
+  filetypes = { "python" },
+  on_attach = on_attach,
+  settings = {
+    python = {
+      analysis = {
+        -- autoSearchPaths = true,
+        -- useLibraryCodeForTypes = true,
+        diagnosticMode = "workspace",
+        typeCheckingMode = "off",
+
+      },
+    },
+  },
+}
+require'navigator'.setup({
+  mason = true,
+  lsp_installer = false,
+  lsp = {
+  enable = false,
+  format_on_save = true,
+  -- disable_lsp = "all",
+  diagnostic = {
+    underline = false, 
+    virtual_text = false, 
+    update_in_insert = true,
+  },
+  diagnostic_virtual_text = true,
+  }
+}
+)
+
+require("trouble").setup {
+  auto_open = false, 
+  auto_close = true, 
+  auto_preview = true,
+  mode = "workspace_diagnostics",
+}
+local diagnostics_active = false
+vim.diagnostic.config{virtual_text=false}
+vim.keymap.set('n', '<C-d>', function()
+  diagnostics_active = not diagnostics_active
+  if diagnostics_active then
+    vim.diagnostic.show()
+  else
+    vim.diagnostic.hide()
+  end
+end)
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+    vim.lsp.diagnostic.on_publish_diagnostics,
+    {
+      virtual_text = true,
+      update_in_insert = true,
+      underline = false, 
+      severity_sort = true 
+    }
+)
+vim.diagnostic.config({
+  virtual_text = true,
+  update_in_insert = false,
+  float = {
+    source = "always", -- Or "if_many"
+  },
+})
 EOF
 " Setup Completion
 " See https://github.com/hrsh7th/nvim-cmp#basic-configuration
@@ -606,10 +629,12 @@ nnoremap <silent> gd    <cmd>lua vim.lsp.buf.definition()<CR>
 nnoremap <silent> ga    <cmd>lua vim.lsp.buf.code_action()<CR>
 nnoremap <silent> g[ <cmd>lua vim.diagnostic.goto_prev()<CR>
 nnoremap <silent> g] <cmd>lua vim.diagnostic.goto_next()<CR>
-nnoremap <silent> g, :lua require'popui.diagnostics-navigator'()<CR>
+nnoremap <silent> g. :lua require'popui.diagnostics-navigator'()<CR>
 
+
+" fuc 
+nnoremap xx <cmd>TroubleToggle<cr>
 noremap  <silent>  <C-S>          :update<CR>
-noremap  <silent>  <F1>          :Tagbar<CR>
 noremap  <silent>  <F3>           :nohl<CR>
 
 noremap <silent> <C-t>         :tabnew<CR>
@@ -623,7 +648,10 @@ nnoremap <C-J> <C-A><Down>
 nnoremap <C-K> <C-A><Up>
 nnoremap <C-L> <C-A><Right>
 
-autocmd FileType python noremap <buffer> <F8> :call Black()<CR>
+autocmd FileType cpp noremap <buffer> <F8> :Neoformat! cpp<CR>
+autocmd FileType c noremap <buffer> <F8> :Neoformat! c<CR>
+
+autocmd FileType python noremap <buffer> <F8> :Black<CR>
 autocmd FileType python noremap <buffer> <F2> :!chmod +x ./% && ./%<CR>
 
 autocmd FileType rust noremap <buffer> <F2> :RustRun<CR>
