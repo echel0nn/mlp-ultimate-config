@@ -122,7 +122,7 @@ syntax on
 set wrapmargin=10
 set number
 set background=dark
-colorscheme gruvbox_edited
+colorscheme midnight8 
 
 " open help vertically
 command! -nargs=* -complete=help Help vertical belowright help <args>
@@ -133,7 +133,7 @@ autocmd FileType help wincmd L
 autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4 
 autocmd BufNewFile,BufRead *.c setlocal expandtab tabstop=2 shiftwidth=2 
 autocmd BufNewFile,BufRead *.cpp setlocal expandtab tabstop=2 shiftwidth=2 
-autocmd BufNewFile,BufRead *.rs setlocal expandtab tabstop=4 shiftwidth=4
+autocmd BufNewFile,BufRead *.rs setlocal expandtab tabstop=2 shiftwidth=2
 
 autocmd BufNewFile,BufRead *.ino setlocal noet ts=4 sw=4 sts=4
 autocmd BufNewFile,BufRead *.txt setlocal noet ts=4 sw=4
@@ -634,7 +634,8 @@ nnoremap <silent> g] <cmd>lua vim.diagnostic.goto_next()<CR>
 nnoremap <silent> g. :lua require'popui.diagnostics-navigator'()<CR>
 
 
-" fuc 
+" fuc
+let g:rust_recommended_style=1
 nnoremap xx <cmd>TroubleToggle<cr>
 noremap  <silent>  <C-S>          :update<CR>
 noremap  <silent>  <F3>           :nohl<CR>
@@ -658,7 +659,6 @@ autocmd FileType python noremap <buffer> <F8> :Black<CR>
 autocmd FileType python noremap <buffer> <F2> :!chmod +x ./% && ./%<CR>
 
 autocmd FileType rust noremap <buffer> <F2> :RustRun<CR>
-autocmd FileType rust noremap <buffer> <F5> :!cargo build<CR>
 autocmd FileType rust   noremap <buffer> <F6> :!cargo run<CR>
 autocmd FileType rust   noremap <buffer> <F7> :!cargo build --release<CR>
 
