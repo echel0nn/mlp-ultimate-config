@@ -1,4 +1,4 @@
-"NeoBundle Scripts-----------------------------
+""NeoBundle Scripts-----------------------------
 if has('vim_starting')  
   "source ~/.vim_runtime/vimrcs/extended.vim
 endif
@@ -398,11 +398,11 @@ let g:promptline_preset = {
 let g:neoformat_run_all_formatters = 1
 let g:neoformat_c_clangformat = {
     \ 'exe': 'clang-format',
-    \ 'args': ['--style="{IndentWidth: 2}"']
+    \ 'args': ['--style="{IndentWidth: 2, SortIncludes: Never}"']
 \}
 let g:neoformat_cpp_clangformat = {
     \ 'exe': 'clang-format',
-    \ 'args': ['--style="{IndentWidth: 2}"']
+    \ 'args': ['--style="{IndentWidth: 2, SortIncludes: Never}}"']
 \}
 let g:neoformat_enabled_cpp = ['clangformat']
 let g:neoformat_enabled_c = ['clangformat']
@@ -456,7 +456,7 @@ EOF
 lua <<EOF
 require("mason").setup()
 require("mason-lspconfig").setup({
-    ensure_installed = { "sumneko_lua",
+    ensure_installed = { 
     "rust_analyzer", 
     "clangd",
     "pyright",
@@ -488,7 +488,6 @@ require('mason-tool-installer').setup {
   -- Default: 0
   start_delay = 1000, -- 3 second delay
 }
-require("lspconfig").sumneko_lua.setup {}
 require("lspconfig").rust_analyzer.setup {}
 -- WORKAROUND: WHY THE FUCK CLANGD RUNS TWO INSTANCE? require("lspconfig").clangd.setup {}
 require("lspconfig").pyright.setup {
@@ -509,7 +508,7 @@ require("lspconfig").pyright.setup {
 }
 require'navigator'.setup({
   mason = true,
-  lsp_installer = false,
+  -- lsp_installer = false,
   lsp = {
   enable = false,
   format_on_save = true,
@@ -557,6 +556,7 @@ vim.diagnostic.config({
   },
 })
 EOF
+
 " Setup Completion
 " See https://github.com/hrsh7th/nvim-cmp#basic-configuration
 lua <<EOF
