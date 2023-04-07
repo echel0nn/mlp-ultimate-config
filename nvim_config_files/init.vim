@@ -413,12 +413,12 @@ let g:code_action_menu_window_border = 'single'
 " navigator setup
 lua require('crates').setup()
 lua require('terminal').config()
-
+lua require('barbar').setup()
 " TreeSitter Config
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
   -- A list of parser names, or "all"
-  ensure_installed = { "bash", "c", "cmake", "cpp", "css", "dockerfile",  "help", "html", "http", "javascript", "json",  "make", "markdown", "python", "regex", "rust", "toml", "vim", "yaml" },
+  ensure_installed = { "bash", "c", "cmake", "cpp", "css", "dockerfile",  "vimdoc", "html", "http", "javascript", "json",  "make", "markdown", "python", "regex", "rust", "toml", "vim", "yaml" },
 
   -- Install parsers synchronously (only applied to `ensure_installed`)
   sync_install = false,
