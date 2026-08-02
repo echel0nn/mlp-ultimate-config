@@ -2,7 +2,7 @@
 
 # cupd=$(checkupdates | wc -l)
 cupd=$(checkupdates | wc -l)
-if [[ $cupd -eq "0\n" ]]; then
+if [[ $cupd -ge "1" ]]; then
 	echo UPDATE Available: "$cupd"
 else
 

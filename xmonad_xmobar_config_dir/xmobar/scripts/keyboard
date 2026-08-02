@@ -1,3 +1,6 @@
 #!/usr/bin/env bash
-
-xkb-switch
+if command -v xkb-switch >/dev/null 2>&1; then
+    xkb-switch
+else
+    setxkbmap -query 2>/dev/null | awk '/^layout:/ {print toupper($2); exit}'
+fi

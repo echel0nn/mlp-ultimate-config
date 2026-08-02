@@ -43,9 +43,9 @@ Config { font            = "xft:JetBrainsMono NF:weight=bold:pixelsize=14:antial
                               -- charged status
 		              , "-i"   , ""
                     ] 50
-                    , Run Com "bash" ["/home/rd/.config/xmobar/scripts/mycheckupdates"] "check-updates" 1800
+                    , Run Com "bash" ["/home/dante/.config/xmobar/scripts/mycheckupdates"] "check-updates" 1800
                     , Run Com ".config/xmobar/trayer-padding-icon.sh" [] "trayerpad" 20
-                    , Run Network "wlp3s0" ["-t", "<fn=2>\xf1eb</fn> <rx>kb <fn=2>\xf063</fn><fn=2>\xf062</fn> <tx>kb"] 20
+                    , Run Network "wlp61s0" ["-t", "<fn=2>\xf1eb</fn> <rx>kb <fn=2>\xf063</fn><fn=2>\xf062</fn> <tx>kb"] 20
                     -- , Run Cpu ["-t", "<fn=2>\xf2db</fn> <total>%","-H","50","--high","red"] 20
                     , Run Cpu [ "--template", "<fc=#2ac3de><fn=2>\xf2db</fn> <total>%</fc>"
                               , "--Low","3"
@@ -53,15 +53,15 @@ Config { font            = "xft:JetBrainsMono NF:weight=bold:pixelsize=14:antial
                               , "--low","#2ac3de"
                               , "--normal","#3bc3de"
                               , "--high","#f7768e"] 50
-		    , Run Com "bash" ["/home/rd/.config/xmobar/scripts/keyboard"] "keyboard" 10
-		    , Run Com "bash" ["/home/rd/.config/xmobar/scripts/volume"] "volume" 10
+		    , Run Com "bash" ["/home/dante/.config/xmobar/scripts/keyboard"] "keyboard" 10
+		    , Run Com "bash" ["/home/dante/.config/xmobar/scripts/volume"] "volume" 10
 		    , Run UnsafeStdinReader
 
                     ]
        , sepChar = "%"
        , alignSep = "}{"
---       , template =  " %UnsafeStdinReader%}{<fc=><fc=#dfdfdf>%sep% %wlp3s0% </fc> <fc=#c678dd>%sep% %penguin% %uname%</fc><fc=#98be65> %sep% %up% %check-updates% updates</fc> <fc=#da8548>%sep% %baticon% %battery%</fc>  %date% <fc=#777777>%sep%</fc>%trayerpad%"
-       , template = " <action=`alacritty`><icon=haskell_20.xpm/></action> <fc=#777777>|</fc> %UnsafeStdinReader%}{ <fc=#a9b1d6>%wlp3s0%</fc><fc=#ff9e64> %sep% <action=`alacritty -e doas pacman -Syu --noconfirm`>%up% %check-updates%</action></fc>%battery% <fc=#7aa2f7>%sep% <action=`pamixer -t`>%volume%</action></fc> <fc=#cfc9c2>%sep% <action=`setxkbmap intl`>%keyicon% %keyboard%</action></fc> <action=`emacsclient -c -a 'emacs' --eval '(doom/window-maximize-buffer(cfw:open-org-calendar))'`>%date%</action>%time% <fc=#777777>%sep%</fc>%trayerpad%"
+--       , template =  " %UnsafeStdinReader%}{<fc=><fc=#dfdfdf>%sep% %wlp61s0% </fc> <fc=#c678dd>%sep% %penguin% %uname%</fc><fc=#98be65> %sep% %up% %check-updates% updates</fc> <fc=#da8548>%sep% %baticon% %battery%</fc>  %date% <fc=#777777>%sep%</fc>%trayerpad%"
+       , template = " <action=`alacritty`><icon=haskell_20.xpm/></action> <fc=#777777>|</fc> %UnsafeStdinReader%}{ <fc=#a9b1d6>%wlp61s0%</fc><fc=#ff9e64> %sep% <action=`alacritty -e doas pacman -Syu --noconfirm`>%up% %check-updates%</action></fc>%battery% <fc=#7aa2f7>%sep% <action=`pamixer -t`>%volume%</action></fc> <fc=#cfc9c2>%sep% <action=`setxkbmap intl`>%keyicon% %keyboard%</action></fc> <action=`emacsclient -c -a 'emacs' --eval '(doom/window-maximize-buffer(cfw:open-org-calendar))'`>%date%</action>%time% <fc=#777777>%sep%</fc>%trayerpad%"
       }
 
 
