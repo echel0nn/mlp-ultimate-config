@@ -1,0 +1,19 @@
+# compiled artifacts
+*.hi
+*.o
+*.pyc
+__pycache__/
+build/
+result
+
+# editor swap
+*.swp
+*.swo
+*~
+
+# direnv / envrc
+.direnv/
+
+# OS trash
+.DS_Store
+Thumbs.db
