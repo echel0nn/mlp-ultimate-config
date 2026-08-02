@@ -117,15 +117,15 @@ cp -a ~/mlp-ultimate-config/xmonad/. ~/.xmonad/
 
 # xmobar (tokyo-night is the active theme referenced by ~/.xmonad/xmobar.conf)
 mkdir -p ~/.config/xmobar
-cp -a ~/mlp-ultimate-config/xmonad_xmobar_config_dir/xmobar/. ~/.config/xmobar/
+cp -a ~/mlp-ultimate-config/xmobar-tokyo-night/. ~/.config/xmobar/
 
 # neovim
 mkdir -p ~/.config/nvim/{lua,colors}
-cp ~/mlp-ultimate-config/nvim_config_files/init.vim         ~/.config/nvim/
-cp ~/mlp-ultimate-config/nvim_config_files/lua/terminal.lua ~/.config/nvim/lua/
-cp ~/mlp-ultimate-config/nvim_config_files/semshi.vim       ~/.config/nvim/
-cp ~/mlp-ultimate-config/nvim_config_files/midnight8.vim    ~/.config/nvim/colors/
-cp ~/mlp-ultimate-config/nvim_color_schemes/*.vim           ~/.config/nvim/colors/
+cp ~/mlp-ultimate-config/nvim/init.vim         ~/.config/nvim/
+cp ~/mlp-ultimate-config/nvim/lua/terminal.lua ~/.config/nvim/lua/
+cp ~/mlp-ultimate-config/nvim/semshi.vim       ~/.config/nvim/
+cp ~/mlp-ultimate-config/nvim/colors/midnight8.vim    ~/.config/nvim/colors/
+cp ~/mlp-ultimate-config/nvim/colors/*.vim           ~/.config/nvim/colors/
 
 # kitty
 mkdir -p ~/.config/kitty
