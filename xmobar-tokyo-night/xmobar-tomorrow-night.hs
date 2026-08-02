@@ -20,10 +20,10 @@ Config { font = "xft:JetBrainsMono NF:weight=bold:antialias=true:hinting=true:pi
                     , Run Com "echo" ["<fn=3>\xf0aa</fn>"] "up" 3600
                     , Run Com "echo" ["<fn=2>\xf053</fn>"] "sep" 10000
                     , Run Date "<fc=#b77ee0>\xf053 \xf073 %a %b %_d %Y </fc><fc=#81a2be>\xf053 \xf017 %H:%M:%S</fc>" "date"  10
-                    , Run Com "bash" ["/home/rd/.config/xmobar/scripts/brightness.sh"] "brightness"    10
+                    , Run Com "bash" [".config/xmobar/scripts/brightness.sh"] "brightness"    10
                     , Run Com "echo" ["<fn=2>\xf241</fn>"] "baticon" 10000
                     , Run BatteryP ["BAT0"] ["-t", "<left>%"] 360
-                    , Run Com "bash" ["/home/rd/.local/bin/pacupdate"] "check-updates" 1800
+                    , Run Com "bash" [".local/bin/pacupdate"] "check-updates" 1800
                     , Run Com ".config/xmobar/trayer-padding-icon.sh" [] "trayerpad" 20
                     , Run DiskU [("/", "<fn=2>\xf0a0</fn> <free>")] [] 60
                     , Run Network "wlp3s0" ["-t", "<fn=2>\xf1eb</fn> <rx>kb <fn=2>\xf063</fn><fn=2>\xf062</fn> <tx>kb"] 20

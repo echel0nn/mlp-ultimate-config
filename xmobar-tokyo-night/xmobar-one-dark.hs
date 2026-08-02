@@ -34,7 +34,7 @@ Config { font            = "xft:JetBrainsMono NF:weight=bold:pixelsize=14:antial
                               -- charged status
                               , "-i"   , "<fn=2>\xf240</fn> <fc=#98be65>Full</fc>"
                     ] 50
-                    , Run Com "bash" ["/home/rd/.config/xmobar/scripts/mycheckupdates"] "check-updates" 1800
+                    , Run Com "bash" [".config/xmobar/scripts/mycheckupdates"] "check-updates" 1800
                     , Run Com ".config/xmobar/trayer-padding-icon.sh" [] "trayerpad" 20
                     , Run Network "wlp3s0" ["-t", "<fn=2>\xf1eb</fn> <rx>kb <fn=2>\xf063</fn><fn=2>\xf062</fn> <tx>kb"] 20
                     -- , Run Cpu ["-t", "<fn=2>\xf2db</fn> <total>%","-H","50","--high","red"] 20

@@ -19,7 +19,7 @@ Config { font            = "xft:JetBrainsMono NF:weight=bold:pixelsize=14:antial
                     , Run Date "<fc=#a9a1e1><fc=#666666>|</fc> <fn=2>\xf073</fn> %m/%_d/%y </fc><fc=#51afef><fc=#666666>|</fc> <fn=2>\xf017</fn> %H:%M</fc>" "date"  10
                     , Run Com "echo" ["<fn=2>\xf241</fn>"] "baticon" 10000
                     , Run BatteryP ["BAT0"] ["-t", "<left>%"] 360
-                    , Run Com "bash" ["/home/rd/.config/xmobar/scripts/mycheckupdates"] "check-updates" 1800
+                    , Run Com "bash" [".config/xmobar/scripts/mycheckupdates"] "check-updates" 1800
                     , Run Com ".config/xmobar/trayer-padding-icon.sh" [] "trayerpad" 20
                     , Run DiskU [("/", "<fn=2>\xf0a0</fn> <free>")] [] 60
                     , Run Network "wlp3s0" ["-t", "<fn=2>\xf1eb</fn> <rx>kb <fn=2>\xf063</fn><fn=2>\xf062</fn> <tx>kb"] 20

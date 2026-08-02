@@ -43,7 +43,7 @@ Config { font            = "xft:JetBrainsMono NF:weight=bold:pixelsize=14:antial
                               -- charged status
 		              , "-i"   , ""
                     ] 50
-                    , Run Com "bash" ["/home/dante/.config/xmobar/scripts/mycheckupdates"] "check-updates" 1800
+                    , Run Com "bash" [".config/xmobar/scripts/mycheckupdates"] "check-updates" 1800
                     , Run Com ".config/xmobar/trayer-padding-icon.sh" [] "trayerpad" 20
                     , Run Network "wlp61s0" ["-t", "<fn=2>\xf1eb</fn> <rx>kb <fn=2>\xf063</fn><fn=2>\xf062</fn> <tx>kb"] 20
                     -- , Run Cpu ["-t", "<fn=2>\xf2db</fn> <total>%","-H","50","--high","red"] 20
@@ -53,8 +53,8 @@ Config { font            = "xft:JetBrainsMono NF:weight=bold:pixelsize=14:antial
                               , "--low","#2ac3de"
                               , "--normal","#3bc3de"
                               , "--high","#f7768e"] 50
-		    , Run Com "bash" ["/home/dante/.config/xmobar/scripts/keyboard"] "keyboard" 10
-		    , Run Com "bash" ["/home/dante/.config/xmobar/scripts/volume"] "volume" 10
+		    , Run Com "bash" [".config/xmobar/scripts/keyboard"] "keyboard" 10
+		    , Run Com "bash" [".config/xmobar/scripts/volume"] "volume" 10
 		    , Run UnsafeStdinReader
 
                     ]
