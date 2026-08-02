@@ -204,7 +204,7 @@ execute () {
     [ "${xsaver_status#* locked}" = "$xsaver_status" ] || xdotool key Escape
 
     # reset wallpaper
-    #feh --bg-fill /home/echelon/Resimler/Wallpapers/wallhaven-397748.jpg
+    #feh --bg-fill $HOME/Resimler/Wallpapers/wallhaven-397748.jpg
 
     # remember what our preferred config is for this output combination
     save_fingerprint ${mode:-}

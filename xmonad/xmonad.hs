@@ -1216,7 +1216,7 @@ myMouseBindings (XConfig {XMonad.modMask = myModMask}) = M.fromList $
 ---------------------------------------------------------------------------
 myStartupHook = do
     setDefaultCursor xC_left_ptr
-    spawnOnce "/home/dante/.local/bin/init-input"
+    spawnOnce "$HOME/.local/bin/init-input"
 quitXmonad :: X ()
 quitXmonad = io (exitWith ExitSuccess)
 

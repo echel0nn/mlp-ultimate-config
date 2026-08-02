@@ -36,7 +36,7 @@
 # lockscreen script if not already running. I can switch to i3lock in
 # that script (or others) as desired.
 
-xss-lock -- /home/unleashed/bin/wm/lockscreen &
+xss-lock -- $HOME/bin/wm/lockscreen &
 
 
 # ----------------------------------------------------------------------
