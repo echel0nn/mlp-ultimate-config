@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# rofi-emoji wrapper — copy chosen emoji to clipboard
+exec rofi -show emoji -modi emoji -theme ~/.rofi/solarized-darker.rasi

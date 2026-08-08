@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# clipmenu via rofi
+CM_LAUNCHER=rofi exec clipmenu -theme ~/.rofi/solarized-darker.rasi -p clip

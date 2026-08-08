@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# rofi-power — tokyo-night power menu
+chosen=$(printf '%s\n' \
+    "  Lock" \
+    "󰤄  Suspend" \
+    "  Reboot" \
+    "  Shutdown" \
+    "󰗽  Logout" \
+    | rofi -dmenu -i -p "power" -theme ~/.rofi/solarized-darker.rasi)
+
+case "$chosen" in
+    *Lock)     lockscreen ;;
+    *Suspend)  systemctl suspend ;;
+    *Reboot)   systemctl reboot ;;
+    *Shutdown) systemctl poweroff ;;
+    *Logout)   pkill -x xmonad ;;
+esac

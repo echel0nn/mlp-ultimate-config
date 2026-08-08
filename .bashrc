@@ -164,3 +164,24 @@ echo "                           * "
 echo "                          * "                                             
 echo "                         * "'
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+# add mlp-ultimate-config helper scripts to PATH
+export PATH="$HOME/mlp-ultimate-config/bin:$PATH"
+
+# ---------------------------------------------------------------
+# eza (modern ls with icons + git integration)
+# NOTE: no `bat` alias for cat — bat's headers/gutter break copy-paste
+# ---------------------------------------------------------------
+if command -v eza >/dev/null; then
+    alias ls='eza --icons --group-directories-first'
+    alias ll='eza -l  --icons --group-directories-first --git'
+    alias la='eza -la --icons --group-directories-first --git'
+    alias tree='eza -T --icons --git-ignore'
+fi
+
+# ---------------------------------------------------------------
+# fastfetch on interactive login
+# ---------------------------------------------------------------
+if [ -n "$PS1" ] && command -v fastfetch >/dev/null; then
+    fastfetch 2>/dev/null
+fi

@@ -1,22 +1,8 @@
 #!/usr/bin/env bash
-
-volume="$(pamixer --get-volume-human)"
-level=${volume::-1}
-muted="$(pamixer --get-mute)"
-icons=("奄 " "奔 " "墳 " " ")
-
-if [[ "$muted" == "true" ]]; then
-	echo -e "婢"
-	# echo ""
-else
-	if [ "$level" -eq 0 ]; then 
-		icon=${icons[0]}
-	elif [ "$level" -le 20 ]; then
-		icon=${icons[1]}
-	elif [ "$level" -le 50 ]; then
-		icon=${icons[2]}
-	else
-		icon=${icons[3]}
-	fi
-	echo "$icon$level"
-fi
+vol=$(pamixer --get-volume-human 2>/dev/null)
+case "$vol" in
+    muted)  printf '<fn=2>\uf026</fn> muted' ;;
+    0%)     printf '<fn=2>\uf026</fn> 0%%' ;;
+    [1-9]%|[1-3][0-9]%) printf '<fn=2>\uf027</fn> %s' "$vol" ;;
+    *)      printf '<fn=2>\uf028</fn> %s' "$vol" ;;
+esac
