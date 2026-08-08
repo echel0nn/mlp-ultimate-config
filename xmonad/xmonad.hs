@@ -118,7 +118,6 @@ main = do
     -- for taffybar, add pagerHints below
 
     xmonad 
-        $ ewmhFullscreen . ewmh . docks $ dynamicProjects projects
         $ withNavigation2DConfig myNav2DConf
         -- $ withUrgencyHook NoUrgencyHook
         $ withUrgencyHook LibNotifyUrgencyHook
