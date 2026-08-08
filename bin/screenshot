@@ -1,23 +1,19 @@
 #!/bin/sh
-
-SCRIPTNAME=$(basename $0)
+# safe screenshot — no more rm/cp of xmobar.conf that ate the config
+SCRIPTNAME=$(basename "$0")
 FILENAME="$HOME/Screenshots/$SCRIPTNAME-$(date +'%Y-%m-%d-%H-%M-%S').png"
+mkdir -p "$HOME/Screenshots"
 
 case ${1:-} in
     select*|region|area) SEL="-s" ;;
     *) SEL="" ;;
 esac
 
-rm ~/.xmonad/xmobar.conf 
-cp ~/.xmonad/xmobar.conf.bak ~/.xmonad/xmobar.conf
-xdotool key alt+q
-notify-send "Shadowed IP"
-sleep 3 &&
-maim --format=png $SEL "$FILENAME"
-#maim -s --format png /dev/stdout | xclip -selection clipboard -t image/png -i
-echo -n $FILENAME | xclip -selection clipbard
-notify-send "Screen shot saved $FILENAME"
-rm ~/.xmonad/xmobar.conf
-cp ~/.xmonad/xmobar.conf.baq ~/.xmonad/xmobar.conf
-xdotool key alt+q
-notify-send "Unshadowed IP"
+command -v maim >/dev/null || { notify-send "screenshot" "maim not installed"; exit 1; }
+maim --format=png $SEL "$FILENAME" 2>/dev/null
+if [ -s "$FILENAME" ]; then
+    printf '%s' "$FILENAME" | xclip -selection clipboard 2>/dev/null
+    notify-send "Screenshot saved" "$FILENAME"
+else
+    notify-send "Screenshot failed" "empty file"
+fi

@@ -17,3 +17,6 @@ result
 # OS trash
 .DS_Store
 Thumbs.db
+
+# editor / script backups
+*.bak
