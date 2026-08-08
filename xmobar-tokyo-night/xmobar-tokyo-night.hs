@@ -1,7 +1,7 @@
 Config { font            = "xft:JetBrainsMono NF:weight=bold:pixelsize=14:antialias=true:hinting=true"
-       , additionalFonts = [ "xft:Mononoki:pixelsize=14"
-                           , "xft:Font Awesome 6 Free Solid:pixelsize=14"
-                           , "xft:Font Awesome 6 Brands:pixelsize=14"
+       , additionalFonts = [ "xft:Cascadia Code NF:pixelsize=14"
+                           , "xft:Cascadia Code NF:pixelsize=14"
+                           , "xft:Cascadia Code NF:pixelsize=14"
                            , "xft:JetBrainsMono NF:weight=bold:pixelsize=35:antialias=true:hinting=true"
                            ]
        , bgColor      = "#1a1b26"
