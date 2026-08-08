@@ -118,7 +118,7 @@ main = do
     -- for taffybar, add pagerHints below
 
     xmonad 
-        $ dynamicProjects projects
+        $ ewmhFullscreen . ewmh . docks $ dynamicProjects projects
         $ withNavigation2DConfig myNav2DConf
         -- $ withUrgencyHook NoUrgencyHook
         $ withUrgencyHook LibNotifyUrgencyHook
@@ -240,7 +240,7 @@ volumeDown       = "pulseaudio-ctl down"
 myAltTerminal       = "cool-retro-term"
 myBrowser           = "firefox" -- chrome with WS profile dirs
 myBrowserClass      = "Google-chrome-beta"
-lockscreen          = "i3lock -n -c 000000"
+lockscreen          = "/usr/local/bin/lockscreen"
 myStatusBar         = "xmobar -x0 ~/.xmonad/xmobar.conf"
 --myLauncher          = "dmenu_run"
 --myLauncher          = "rofi -matching fuzzy -show run"
@@ -381,7 +381,7 @@ barFull = avoidStruts $ Simplest
 
 -- cf http://xmonad.org/xmonad-docs/xmonad-contrib/src/XMonad-Config-Droundy.html
 
-myLayoutHook = showWorkspaceName
+myLayoutHook = smartBorders . spacingRaw False (Border 16 16 16 16) True (Border 8 8 8 8) True $ showWorkspaceName
              $ onWorkspace wsFLOAT floatWorkSpace
              $ fullscreenFloat -- fixes floating windows going full screen, while retaining "bounded" fullscreen
              $ fullScreenToggle
@@ -1216,7 +1216,7 @@ myMouseBindings (XConfig {XMonad.modMask = myModMask}) = M.fromList $
 ---------------------------------------------------------------------------
 myStartupHook = do
     setDefaultCursor xC_left_ptr
-    spawnOnce "$HOME/.local/bin/init-input"
+    spawnOnce "/home/dante/.local/bin/init-input"
 quitXmonad :: X ()
 quitXmonad = io (exitWith ExitSuccess)
 
@@ -1360,3 +1360,11 @@ forceCenterFloat = doFloatDep move
     h = 1/2
     x = (1-w)/2
     y = (1-h)/2
+
+
+-- ─── NamedScratchpad additions ─────────────────────────────────────
+myScratchpads :: [NamedScratchpad]
+myScratchpads =
+  [ NS "term" "kitty --class scratch-term" (className =? "scratch-term")
+        (customFloating $ W.RationalRect 0.15 0.10 0.70 0.55)
+  ]
