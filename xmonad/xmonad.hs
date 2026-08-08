@@ -380,7 +380,7 @@ barFull = avoidStruts $ Simplest
 
 -- cf http://xmonad.org/xmonad-docs/xmonad-contrib/src/XMonad-Config-Droundy.html
 
-myLayoutHook = smartBorders . spacingRaw True (Border 16 16 16 16) True (Border 8 8 8 8) True $ showWorkspaceName
+myLayoutHook = showWorkspaceName
              $ onWorkspace wsFLOAT floatWorkSpace
              $ fullscreenFloat -- fixes floating windows going full screen, while retaining "bounded" fullscreen
              $ fullScreenToggle
