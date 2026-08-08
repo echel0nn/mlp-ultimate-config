@@ -140,7 +140,6 @@ alias nmaph='nmap --script http-vulners-regex.nse --script-args paths={"/"} '
 alias nikto='nikto -Option USERAGENT=Mozilla'
 alias wfuzzd='wfuzz -w /usr/share/dirbuster/directory-list-lowercase-2.3-medium.txt -H "User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:69.0) Gecko/20100101 Firefox/69.0" --hc=404'
 alias sqlmaptf='sqlmap --risk 3 --level 3 --random-agent --tamper=apostrophemask,apostrophenullencode,base64encode,between,chardoubleencode,charencode,charunicodeencode,equaltolike,greatest,ifnull2ifisnull,multiplespaces,percentage,randomcase,space2comment,space2plus,space2randomblank,unionalltounion,between --drop-set-cookie'
-alias gdb="tmux new-session gdb" # needed for gdb-splitmind
 xset r rate 180 50
 
 alias echelon='echo;
