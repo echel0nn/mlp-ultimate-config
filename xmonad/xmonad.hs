@@ -40,6 +40,7 @@ import XMonad.Actions.SpawnOn
 import XMonad.Actions.WindowGo
 import XMonad.Actions.WithAll               -- action all the things
 import XMonad.Hooks.WindowSwallowing
+import XMonad.Hooks.RefocusLast
 import XMonad.Hooks.DynamicLog              -- for xmobar
 import XMonad.Hooks.DynamicProperty         -- 0.12 broken; works with github version
 import XMonad.Hooks.EwmhDesktops
@@ -135,7 +136,7 @@ myConfig p = def
         , manageHook         = myManageHook
         , handleEventHook    = myHandleEventHook
         , layoutHook         = myLayoutHook
-        , logHook            = myLogHook p
+        , logHook            = refocusLastLogHook <+> (myLogHook p)
         , modMask            = myModMask
         , mouseBindings      = myMouseBindings
         , startupHook        = myStartupHook 
@@ -381,7 +382,8 @@ barFull = avoidStruts $ Simplest
 
 -- cf http://xmonad.org/xmonad-docs/xmonad-contrib/src/XMonad-Config-Droundy.html
 
-myLayoutHook = showWorkspaceName
+myLayoutHook = refocusLastLayoutHook
+             $ showWorkspaceName
              $ onWorkspace wsFLOAT floatWorkSpace
              $ fullscreenFloat -- fixes floating windows going full screen, while retaining "bounded" fullscreen
              $ fullScreenToggle
@@ -411,7 +413,7 @@ myLayoutHook = showWorkspaceName
 
     addTopBar           = noFrillsDeco shrinkText topBarTheme
 
-    mySpacing           = spacing gap
+    mySpacing           = smartSpacing gap
     sGap                = quot gap 2
     myGaps              = gaps [(U, gap),(D, gap),(L, gap),(R, gap)]
     mySmallGaps         = gaps [(U, sGap),(D, sGap),(L, sGap),(R, sGap)]
@@ -1333,7 +1335,7 @@ myManageHook =
         tileBelowNoFocus = insertPosition Below Older
 
 
-myHandleEventHook = swallowEventHook (className =? "kitty" <||> className =? "Alacritty") (return True) <+> (docksEventHook)
+myHandleEventHook = refocusLastWhen refocusingIsActive <+> swallowEventHook (className =? "kitty" <||> className =? "Alacritty") (return True) <+> (docksEventHook)
                 <+> fadeWindowsEventHook
                 <+> handleEventHook def
                 <+> XMonad.Layout.Fullscreen.fullscreenEventHook
