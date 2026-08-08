@@ -20,3 +20,13 @@ export QT_QPA_PLATFORM=xcb
 # XDG portal color-scheme = prefer-dark (electron / flatpak / newer GTK apps)
 export XDG_CURRENT_DESKTOP=X-Xmonad
 export GNOME_SHELL_THEME=dark
+
+# ---------------------------------------------------------------
+# wallpaper slideshow — rotates every 15 min if multiple images in ~/wallpapers
+# ---------------------------------------------------------------
+( while true; do
+    IMG=$(find "$HOME/wallpapers" -type f \( -iname '*.png' -o -iname '*.jpg' \) 2>/dev/null | shuf -n1)
+    [ -n "$IMG" ] && feh --bg-fill --no-fehbg "$IMG"
+    sleep 900
+done ) &
+disown

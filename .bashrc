@@ -185,3 +185,38 @@ fi
 if [ -n "$PS1" ] && command -v fastfetch >/dev/null; then
     fastfetch 2>/dev/null
 fi
+
+# ---------------------------------------------------------------
+# zoxide — smarter cd (`z <partial>` jumps to frecent match)
+# ---------------------------------------------------------------
+eval "$(zoxide init bash --cmd z)"
+
+# ---------------------------------------------------------------
+# atuin — shell history that syncs + fuzzy Ctrl+R (offline by default)
+# ---------------------------------------------------------------
+[ -f "$HOME/.atuin/bin/atuin" ] || command -v atuin >/dev/null
+eval "$(atuin init bash --disable-up-arrow)"
+
+# ---------------------------------------------------------------
+# MANPAGER via bat (colorized man pages; only for `man`, not for cat)
+# ---------------------------------------------------------------
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+export MANROFFOPT="-c"
+
+# ---------------------------------------------------------------
+# aliases for modern coreutils replacements
+# ---------------------------------------------------------------
+command -v duf   >/dev/null && alias df='duf'
+command -v dust  >/dev/null && alias du='dust'
+command -v procs >/dev/null && alias ps='procs'
+command -v difft >/dev/null && alias gdiff='difft'
+alias lg='lazygit'
+alias top='btop'
+alias music='ncspot'
+alias news='newsboat'
+alias vis='cava'
+
+# tealdeer (fast tldr client)
+if command -v tldr >/dev/null && [ ! -d ~/.cache/tealdeer ]; then
+    tldr --update >/dev/null 2>&1 &
+fi
