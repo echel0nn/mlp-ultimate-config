@@ -39,6 +39,7 @@ import XMonad.Actions.SinkAll
 import XMonad.Actions.SpawnOn
 import XMonad.Actions.WindowGo
 import XMonad.Actions.WithAll               -- action all the things
+import XMonad.Hooks.WindowSwallowing
 import XMonad.Hooks.DynamicLog              -- for xmobar
 import XMonad.Hooks.DynamicProperty         -- 0.12 broken; works with github version
 import XMonad.Hooks.EwmhDesktops
@@ -1332,7 +1333,7 @@ myManageHook =
         tileBelowNoFocus = insertPosition Below Older
 
 
-myHandleEventHook = docksEventHook
+myHandleEventHook = swallowEventHook (className =? "kitty" <||> className =? "Alacritty") (return True) <+> (docksEventHook)
                 <+> fadeWindowsEventHook
                 <+> handleEventHook def
                 <+> XMonad.Layout.Fullscreen.fullscreenEventHook
