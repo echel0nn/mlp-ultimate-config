@@ -9,16 +9,21 @@ are commented so you can skip anything you don't want.
 sudo pacman -S --needed \
     xmonad xmonad-contrib xmobar                    \
     dunst picom feh unclutter xss-lock xsettingsd   \
-    polkit-gnome yad                                \
+    polkit-gnome yad libnotify                      \
     kitty alacritty pamixer pacman-contrib          \
     xorg-xset xorg-xinput xorg-xrandr xorg-xdpyinfo \
     ttf-jetbrains-mono-nerd ttf-cascadia-code       \
-    woff2-font-awesome
+    woff2-font-awesome                              \
+    eza fastfetch                                   \
+    papirus-icon-theme capitaine-cursors            \
+    rofi rofi-emoji clipmenu
 ```
 
 Non-pacman:
 - `paru` — build from AUR once, then use to pull `trayer-srg` and `xkb-switch`
   (both AUR-only). The xmobar `keyboard` script tolerates missing `xkb-switch`.
+- `bibata-cursor-theme` (AUR) — nicer than capitaine if you have paru; otherwise
+  the `capitaine-cursors` pacman package is a solid stand-in.
 
 ## 2 · Neovim ecosystem
 
@@ -97,7 +102,7 @@ background, blue→magenta→red ring, live clock, dante@lightrunner greeter.
 ## 5 · Rofi
 
 ```bash
-sudo pacman -S --needed rofi
+sudo pacman -S --needed rofi rofi-emoji
 ```
 
 Deploy the theme to `~/.rofi/solarized-darker.rasi` (matches the launcher
@@ -110,35 +115,87 @@ the shipped theme:
 
 ```bash
 git clone https://github.com/echel0nn/mlp-ultimate-config ~/mlp-ultimate-config
+cd ~/mlp-ultimate-config
 
-# xmonad legacy (single-file, 1362 lines, needs system xmonad + xmonad-contrib)
+# --- xmonad legacy (single-file, ~1362 lines, needs system xmonad + xmonad-contrib)
 mkdir -p ~/.xmonad
-cp -a ~/mlp-ultimate-config/xmonad/. ~/.xmonad/
+cp -a xmonad/. ~/.xmonad/
 
-# xmobar (tokyo-night is the active theme referenced by ~/.xmonad/xmobar.conf)
+# --- xmobar (tokyo-night is active, referenced by ~/.xmonad/xmobar.conf)
 mkdir -p ~/.config/xmobar
-cp -a ~/mlp-ultimate-config/xmobar-tokyo-night/. ~/.config/xmobar/
+cp -a xmobar-tokyo-night/. ~/.config/xmobar/
+# legacy xmonad expects the active theme at ~/.xmonad/xmobar.conf
+cp xmobar-tokyo-night/xmobar-tokyo-night.hs ~/.xmonad/xmobar.conf
 
-# neovim
+# --- neovim
 mkdir -p ~/.config/nvim/{lua,colors}
-cp ~/mlp-ultimate-config/nvim/init.vim         ~/.config/nvim/
-cp ~/mlp-ultimate-config/nvim/lua/terminal.lua ~/.config/nvim/lua/
-cp ~/mlp-ultimate-config/nvim/semshi.vim       ~/.config/nvim/
-cp ~/mlp-ultimate-config/nvim/colors/midnight8.vim    ~/.config/nvim/colors/
-cp ~/mlp-ultimate-config/nvim/colors/*.vim           ~/.config/nvim/colors/
+cp    nvim/init.vim         ~/.config/nvim/
+cp    nvim/lua/terminal.lua ~/.config/nvim/lua/
+cp    nvim/semshi.vim       ~/.config/nvim/
+cp    nvim/colors/*.vim     ~/.config/nvim/colors/
 
-# kitty
+# --- kitty
 mkdir -p ~/.config/kitty
-cp ~/mlp-ultimate-config/kitty/kitty.conf ~/.config/kitty/
+cp kitty/kitty.conf ~/.config/kitty/
 
-# bash
-cp ~/mlp-ultimate-config/.bashrc ~/.bashrc
+# --- picom / dunst / GTK / cursor (see Section 7 for what these do)
+mkdir -p ~/.config/picom ~/.config/dunst ~/.config/gtk-3.0 ~/.config/gtk-4.0 ~/.icons/default
+cp picom/picom.conf          ~/.config/picom/picom.conf
+cp dunst/dunstrc             ~/.config/dunst/dunstrc
+cp gtk-3.0/settings.ini      ~/.config/gtk-3.0/settings.ini
+cp gtk-3.0/settings.ini      ~/.config/gtk-4.0/settings.ini
+cp icons/default/index.theme ~/.icons/default/index.theme
 
-# xmonad recompile + restart
-xmonad --recompile && xmonad --restart
+# --- rofi theme (bin/rofi-* launchers live under bin/ and are picked up via PATH)
+mkdir -p ~/.rofi
+cp rofi_themes/solarized-darker.rasi ~/.rofi/solarized-darker.rasi 2>/dev/null || true
+
+# --- shell + xsession
+cp .bashrc   ~/.bashrc
+cp .xprofile ~/.xprofile
+
+# --- xmonad recompile + restart (only if X is up)
+command -v xmonad >/dev/null && xmonad --recompile
+[ -n "$DISPLAY" ] && xmonad --restart
 ```
 
-## 7 · Vulkan on Intel (for PCSX2 / other Vulkan apps)
+## 7 · Pimp — what the extra packages do
+
+- **picom** — compositor: blur behind windows, 8 px rounded corners, shadows on
+  floats, fade in/out, 92% opacity on inactive kitty. Config at `picom/picom.conf`,
+  autostarted from `.xprofile`.
+- **dunst** — notifications, tokyo-night themed, urgency-tinted frames, Papirus
+  icons, 10 px rounded corners. Config at `dunst/dunstrc`, autostarted from
+  `.xprofile`. Requires `libnotify` for `notify-send`.
+- **papirus-icon-theme + capitaine-cursors** — GTK / Qt / dunst icon set +
+  X cursor theme. Selected in `gtk-3.0/settings.ini` (also mirrored to
+  `~/.config/gtk-4.0/`) and `icons/default/index.theme`.
+- **eza** — modern `ls` with icons and git status. Aliases (`ls`, `ll`, `la`,
+  `tree`) live in `.bashrc`. **No `bat` alias for cat** — bat's header +
+  line-number gutter break copy-paste; keep `bat` invocable only when explicitly
+  typed.
+- **fastfetch** — one-shot system info panel; fires from `.bashrc` on
+  interactive login shells (guarded by `[ -n "$PS1" ]`).
+- **clipmenu** (+`clipnotify`, +`clipmenud` daemon) — clipboard history,
+  200 entries. Daemon autostarted from `.xprofile`. Invoke picker via
+  `rofi-clip`.
+- **rofi launchers** — three wrappers in `bin/`, all tokyo-night themed via
+  `~/.rofi/solarized-darker.rasi`:
+  - `rofi-power` — Lock / Suspend / Reboot / Shutdown / Logout
+  - `rofi-emoji` — fuzzy emoji picker → clipboard
+  - `rofi-clip`  — clipmenu picker
+- **kitty ligatures + opacity** — `disable_ligatures never`, `background_opacity 0.92`,
+  `dynamic_background_opacity yes` at the bottom of `kitty/kitty.conf`.
+  Looks best with picom's blur.
+
+Suggested xmonad keybinds (not shipped — you own your keys):
+```haskell
+, ("M-x", spawn "rofi-power")
+, ("M-.", spawn "rofi-emoji")
+, ("M-v", spawn "rofi-clip")
+```
+
+## 8 · Vulkan on Intel (for PCSX2 / other Vulkan apps)
 
 ```bash
 sudo pacman -S --needed vulkan-intel vulkan-tools mesa
